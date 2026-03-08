@@ -1,0 +1,162 @@
+/**
+ * POST /api/auth/verify-email
+ *
+ * Verifies user email address using token from registration email.
+ *
+ * SECURITY: Rate limited to prevent token brute force attacks.
+ * Email verification required before accessing certain features.
+ *
+ * Rate limit: 5 attempts per hour per IP
+ *
+ * @body { token }
+ * @returns { success: true } with verified email on success
+ * @returns { error } with 400 for invalid/expired token
+ * @returns { error } with 429 if rate limit exceeded
+ */
+
+import { NextRequest, NextResponse } from "next/server";
+import { hashToken } from "@/lib/auth";
+import { dbManager } from "@/lib/database";
+import { sendWelcomeEmail } from "@/lib/email";
+import { RateLimiter } from "@/lib/utils/security";
+import { getIpAddress } from "@/lib/device-info";
+
+// Rate limiter: 5 verification attempts per hour per IP
+// Prevents brute force attacks on verification tokens
+const verifyEmailRateLimiter = new RateLimiter(5, 60 * 60 * 1000);
+
+export async function POST(request: NextRequest) {
+  try {
+    // Extract client IP for rate limiting
+    const clientIp = getIpAddress(request.headers);
+
+    // Rate limiting: Prevent brute force token guessing
+    if (!verifyEmailRateLimiter.isAllowed(clientIp)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Too many verification attempts. Please try again in an hour.",
+        },
+        {
+          status: 429,
+          headers: { "Retry-After": "3600" }, // 1 hour
+        }
+      );
+    }
+
+    const body = await request.json();
+    const { token } = body;
+
+    if (!token) {
+      return NextResponse.json(
+        { success: false, error: "Verification token is required" },
+        { status: 400 }
+      );
+    }
+
+    // Hash the token to compare with stored hash
+    const hashedToken = hashToken(token);
+
+    // Find user with this token
+    const db = await dbManager.getDatabase();
+    const user = await db.collection("users").findOne({
+      emailVerificationToken: hashedToken,
+      emailVerificationExpiry: { $gt: new Date() },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        { success: false, error: "Invalid or expired verification token" },
+        { status: 400 }
+      );
+    }
+
+    // Check if already verified
+    if (user.isEmailVerified) {
+      return NextResponse.json(
+        { success: true, message: "Email is already verified" },
+        { status: 200 }
+      );
+    }
+
+    // Update user - mark email as verified and clear token
+    await db.collection("users").updateOne(
+      { _id: user._id },
+      {
+        $set: {
+          isEmailVerified: true,
+          updatedAt: new Date(),
+        },
+        $unset: {
+          emailVerificationToken: "",
+          emailVerificationExpiry: "",
+        },
+      }
+    );
+
+    // Send welcome email (non-blocking)
+    sendWelcomeEmail(user.email, user.name).catch(() => {});
+
+    return NextResponse.json(
+      {
+        success: true,
+        message:
+          "Email verified successfully! You now have full access to all features.",
+        data: {
+          email: user.email,
+          isEmailVerified: true,
+        },
+      },
+      { status: 200 }
+    );
+  } catch {
+    return NextResponse.json(
+      { success: false, error: "An error occurred during verification" },
+      { status: 500 }
+    );
+  }
+}
+
+// GET endpoint to check token validity without verifying
+export async function GET(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const token = searchParams.get("token");
+
+    if (!token) {
+      return NextResponse.json(
+        { success: false, error: "Token is required" },
+        { status: 400 }
+      );
+    }
+
+    const hashedToken = hashToken(token);
+    const db = await dbManager.getDatabase();
+
+    const user = await db.collection("users").findOne({
+      emailVerificationToken: hashedToken,
+      emailVerificationExpiry: { $gt: new Date() },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        { success: false, valid: false, message: "Invalid or expired token" },
+        { status: 400 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        success: true,
+        valid: true,
+        email: user.email,
+      },
+      { status: 200 }
+    );
+  } catch {
+    return NextResponse.json(
+      { success: false, error: "An error occurred" },
+      { status: 500 }
+    );
+  }
+}
