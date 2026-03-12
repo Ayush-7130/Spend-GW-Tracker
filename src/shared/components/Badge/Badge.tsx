@@ -10,6 +10,7 @@ export default function Badge({
   className = "",
   outline = false,
   title,
+  style,
 }: BadgeProps) {
   // Size configurations
   const sizeStyles = {
@@ -149,6 +150,7 @@ export default function Badge({
         textAlign: "center",
         whiteSpace: "nowrap",
         verticalAlign: "baseline",
+        ...style,
       }}
     >
       {children}

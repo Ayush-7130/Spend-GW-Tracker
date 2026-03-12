@@ -100,6 +100,81 @@ export const POST = withAuth(async (req: NextRequest, context) => {
 
     const now = new Date();
 
+    // --- Direct join path: requireApproval is disabled ---
+    if (!group.settings.requireApproval) {
+      const isRejoin = group.members.some(
+        (m) => m.userId === user.id && m.status === "left"
+      );
+
+      if (isRejoin) {
+        await groupsCollection.updateOne(
+          { _id: new ObjectId(group._id), "members.userId": user.id },
+          {
+            $set: {
+              "members.$.status": "active",
+              "members.$.joinedAt": now,
+              "members.$.role": "member",
+              updatedAt: now,
+            },
+            $unset: { "members.$.leftAt": "" },
+          }
+        );
+      } else {
+        await groupsCollection.updateOne(
+          { _id: new ObjectId(group._id) },
+          {
+            $push: {
+              members: {
+                userId: user.id,
+                role: "member",
+                joinedAt: now,
+                isDefault: false,
+                status: "active",
+              } as any,
+            },
+            $set: { updatedAt: now },
+          }
+        );
+      }
+
+      // Notify admins of new member
+      const adminMembers = group.members.filter((m) => m.role === "admin");
+      for (const admin of adminMembers) {
+        await dbManager.createNotification({
+          userId: admin.userId,
+          groupId: group._id,
+          type: "member_added",
+          message: `${user.email} joined "${group.name}"`,
+          entityId: group._id,
+          entityType: "group",
+          read: false,
+          metadata: { excludeSessionId: undefined },
+        });
+      }
+
+      // Set this as the user's active group (currentGroupId) so all server-side
+      // APIs immediately have access to this group without requiring a manual switch
+      await db
+        .collection("users")
+        .updateOne(
+          { _id: new ObjectId(user.id) },
+          { $set: { currentGroupId: group._id, updatedAt: now } }
+        );
+
+      return successResponse({
+        message: "You have successfully joined the group.",
+        requiresApproval: false,
+        group: {
+          _id: group._id,
+          name: group.name,
+          description: group.description,
+          memberCount: group.members.length + 1,
+        },
+      });
+    }
+
+    // --- Approval-required path: create a pending join request ---
+
     // Add join request to group
     await groupsCollection.updateOne(
       { _id: new ObjectId(group._id) },

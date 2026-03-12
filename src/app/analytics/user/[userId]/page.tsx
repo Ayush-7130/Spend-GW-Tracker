@@ -307,14 +307,14 @@ export default function UserAnalyticsPage() {
                 <>
                   <Link
                     href="/analytics/overview"
-                    className="btn btn-outline-primary btn-sm"
+                    className="btn btn-sm analytics-nav-btn"
                   >
                     <i className="bi bi-speedometer2 me-1"></i>
                     Overview
                   </Link>
                   <Link
                     href="/analytics/timeline"
-                    className="btn btn-outline-success btn-sm"
+                    className="btn btn-sm analytics-nav-btn"
                   >
                     <i className="bi bi-graph-up me-1"></i>
                     Timeline
@@ -326,7 +326,7 @@ export default function UserAnalyticsPage() {
             {/* Balance Overview */}
             <div className="row g-2 mb-4">
               <div className="col-6">
-                <div className="card bg-primary text-white h-100">
+                <div className="card analytics-stat-card h-100">
                   <div className="card-body">
                     <h6 className="card-title">Total Paid</h6>
                     <h5 className="mb-1">
@@ -337,11 +337,7 @@ export default function UserAnalyticsPage() {
                 </div>
               </div>
               <div className="col-6">
-                <div
-                  className={`card ${
-                    data.balance.netBalance >= 0 ? "bg-success" : "bg-danger"
-                  } text-white h-100`}
-                >
+                <div className="card analytics-stat-card h-100">
                   <div className="card-body">
                     <h6 className="card-title">Net Balance</h6>
                     <h5 className="mb-1">
@@ -541,62 +537,50 @@ export default function UserAnalyticsPage() {
 
         /* iPhone SE and very small screens (320px wide) */
         @media (max-width: 375px) {
-          * {
-            box-sizing: border-box !important;
-          }
-
           .container-fluid {
-            padding-left: 0.125rem !important;
-            padding-right: 0.125rem !important;
+            padding-left: 0.25rem !important;
+            padding-right: 0.25rem !important;
             max-width: 100vw !important;
             overflow-x: hidden !important;
           }
 
           .card-header {
-            padding: 0.375rem 0.5rem !important;
+            padding: 0.5rem 0.625rem !important;
           }
 
           .chart-title {
-            font-size: 0.7rem !important;
-          }
-
-          .chart-title i {
-            font-size: 0.7rem !important;
+            font-size: 0.75rem !important;
           }
 
           .chart-select {
             min-width: 60px !important;
-            font-size: 0.625rem !important;
-            padding: 0.125rem 0.25rem !important;
+            font-size: 0.7rem !important;
+            padding: 0.2rem 0.35rem !important;
             height: auto !important;
           }
 
-          .h4,
-          h1 {
-            font-size: 0.9rem !important;
-          }
-
           .card-body {
-            padding: 0.25rem !important;
+            padding: 0.5rem !important;
           }
 
           .btn {
-            font-size: 0.6rem !important;
-            padding: 0.15rem 0.25rem !important;
+            font-size: 0.75rem !important;
+            padding: 0.25rem 0.5rem !important;
             white-space: nowrap !important;
+            min-height: 32px !important;
           }
 
           .card-title {
-            font-size: 0.6rem !important;
-            margin-bottom: 0.125rem !important;
+            font-size: 0.7rem !important;
+            margin-bottom: 0.25rem !important;
           }
 
           h5 {
-            font-size: 0.75rem !important;
+            font-size: 0.8rem !important;
           }
 
           .table {
-            font-size: 0.55rem !important;
+            font-size: 0.7rem !important;
           }
 
           .row {
@@ -606,26 +590,12 @@ export default function UserAnalyticsPage() {
 
           .col-6,
           .col-12 {
-            padding-left: 0.0625rem !important;
-            padding-right: 0.0625rem !important;
+            padding-left: 0.125rem !important;
+            padding-right: 0.125rem !important;
           }
 
-          .card {
-            min-height: 65px !important;
-          }
-
-          .gap-1 {
-            gap: 0.0625rem !important;
-          }
-
-          .gap-2 {
-            gap: 0.125rem !important;
-          }
-
-          .mb-4,
-          .mb-3,
-          .mb-2 {
-            margin-bottom: 0.25rem !important;
+          .mb-4 {
+            margin-bottom: 0.5rem !important;
           }
         }
 
@@ -634,8 +604,8 @@ export default function UserAnalyticsPage() {
           .container-fluid {
             max-width: 100vw !important;
             overflow-x: hidden !important;
-            padding-left: 0.25rem !important;
-            padding-right: 0.25rem !important;
+            padding-left: 0.375rem !important;
+            padding-right: 0.375rem !important;
           }
 
           .card-header {
@@ -643,7 +613,7 @@ export default function UserAnalyticsPage() {
           }
 
           .chart-title {
-            font-size: 0.85rem !important;
+            font-size: 0.875rem !important;
           }
 
           .chart-select {
@@ -652,24 +622,10 @@ export default function UserAnalyticsPage() {
             padding: 0.2rem 0.35rem !important;
           }
 
-          .row {
-            margin-left: 0 !important;
-            margin-right: 0 !important;
-          }
-
-          .row > * {
-            padding-left: 0.125rem !important;
-            padding-right: 0.125rem !important;
-          }
-
           .btn {
-            font-size: 0.7rem !important;
-            padding: 0.25rem 0.4rem !important;
-          }
-
-          .h4,
-          h1 {
-            font-size: 1rem !important;
+            font-size: 0.75rem !important;
+            padding: 0.25rem 0.5rem !important;
+            min-height: 34px !important;
           }
 
           .card-title {

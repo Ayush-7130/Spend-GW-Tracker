@@ -87,7 +87,7 @@ export const ExpenseDetailsModal: React.FC<ExpenseDetailsModalProps> = ({
         return "col-md-3 col-sm-6"; // 4 columns on medium+, 2 on small
       case 3:
       default:
-        return "col-md-4 col-sm-4"; // 3 columns on medium+, 3 on small
+        return "col-md-4 col-sm-6"; // 3 columns on medium+, 2 on small
     }
   };
 

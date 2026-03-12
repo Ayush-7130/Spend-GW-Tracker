@@ -299,7 +299,7 @@ export default function Home() {
           <div className="row mb-4">
             <div className="col-md-8 mb-3 mb-md-0">
               <div className="card h-100">
-                <div className="card-header d-flex justify-content-between align-items-center">
+                <div className="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                   <h5 className="mb-0">
                     {selectedUser === "all"
                       ? "Recent Expenses"
@@ -459,7 +459,7 @@ export default function Home() {
                     {selectedUser === "all" && (
                       <>
                         <button
-                          className="btn btn-success"
+                          className="btn btn-secondary"
                           onClick={() => setShowSettlementDialog(true)}
                         >
                           <i className="bi bi-currency-exchange me-2"></i>
@@ -469,7 +469,7 @@ export default function Home() {
                           settlementData.balances &&
                           settlementData.balances.length > 0 && (
                             <button
-                              className="btn btn-warning"
+                              className="btn btn-outline-primary"
                               onClick={() => handleQuickSettle()}
                             >
                               <i className="bi bi-lightning-fill me-2"></i>
@@ -500,7 +500,7 @@ export default function Home() {
             <div className="row mb-4">
               <div className="col-md-8 mb-3 mb-md-0">
                 <div className="card h-100">
-                  <div className="card-header d-flex justify-content-between align-items-center">
+                  <div className="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                     <h6 className="mb-0">
                       <i className="bi bi-currency-exchange me-2"></i>
                       Settlement Status
@@ -642,7 +642,7 @@ export default function Home() {
             <div className="row mb-4">
               <div className="col-12">
                 <div className="card h-100">
-                  <div className="card-header d-flex justify-content-between align-items-center">
+                  <div className="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                     <h6 className="mb-0">
                       <i className="bi bi-clock-history me-2"></i>
                       Recent Settlements
@@ -810,7 +810,7 @@ export default function Home() {
               form="add-expense-form"
               disabled={operationLoading}
               aria-label="Add Expense"
-              style={{ minWidth: "120px" }}
+              style={{ minWidth: 0 }}
             >
               {operationLoading ? (
                 <>
@@ -1371,7 +1371,7 @@ export default function Home() {
             </button>
             <button
               type="submit"
-              className="btn btn-success d-inline-flex align-items-center justify-content-center"
+              className="btn btn-primary d-inline-flex align-items-center justify-content-center"
               form="settlement-form"
               disabled={operationLoading}
               aria-label="Record Settlement"

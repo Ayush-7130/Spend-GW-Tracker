@@ -90,8 +90,8 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
 
   return (
     <div className={`${marginClass} ${className}`}>
-      <div className="d-flex justify-content-between align-items-center">
-        <div className="d-flex align-items-center">
+      <div className="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div className="d-flex align-items-center" style={{ minWidth: 0 }}>
           {icon && (
             <i
               className={`${icon} me-2`}
@@ -112,7 +112,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
             {title}
           </span>
         </div>
-        {action && <div>{action}</div>}
+        {action && <div className="flex-shrink-0">{action}</div>}
       </div>
       {showDivider && (
         <hr

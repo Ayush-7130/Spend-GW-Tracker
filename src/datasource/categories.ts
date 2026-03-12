@@ -15,6 +15,7 @@ export interface Category {
   color?: string;
   icon?: string;
   isActive?: boolean;
+  isDefault?: boolean; // True for global categories visible to all groups
   groupId?: string; // Optional for backward compatibility
   createdAt?: string;
   updatedAt?: string;

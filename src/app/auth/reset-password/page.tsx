@@ -112,7 +112,7 @@ export default function ResetPasswordPage() {
         <div className="row justify-content-center align-items-center min-vh-100">
           <div className="col-md-6 col-lg-5">
             <div className="card shadow">
-              <div className="card-body p-5 text-center">
+              <div className="card-body p-3 p-md-5 text-center">
                 <div className="spinner-border text-primary mb-4" role="status">
                   <span className="visually-hidden">Validating...</span>
                 </div>
@@ -132,10 +132,10 @@ export default function ResetPasswordPage() {
         <div className="row justify-content-center align-items-center min-vh-100">
           <div className="col-md-6 col-lg-5">
             <div className="card shadow">
-              <div className="card-body p-5 text-center">
+              <div className="card-body p-3 p-md-5 text-center">
                 <i
                   className="bi bi-x-circle mb-4"
-                  style={{ fontSize: "4rem", color: "var(--status-error)" }}
+                  style={{ fontSize: "3rem", color: "var(--status-error)" }}
                 ></i>
                 <h3 className="mb-3">Invalid Reset Link</h3>
                 <p className="mb-4" style={{ color: "var(--text-secondary)" }}>
@@ -166,10 +166,10 @@ export default function ResetPasswordPage() {
         <div className="row justify-content-center align-items-center min-vh-100">
           <div className="col-md-6 col-lg-5">
             <div className="card shadow">
-              <div className="card-body p-5 text-center">
+              <div className="card-body p-3 p-md-5 text-center">
                 <i
                   className="bi bi-check-circle mb-4"
-                  style={{ fontSize: "4rem", color: "var(--status-success)" }}
+                  style={{ fontSize: "3rem", color: "var(--status-success)" }}
                 ></i>
                 <h3 className="mb-3">Password Reset Successful!</h3>
                 <p className="mb-4" style={{ color: "var(--text-secondary)" }}>
@@ -197,7 +197,7 @@ export default function ResetPasswordPage() {
       <div className="row justify-content-center align-items-center min-vh-100">
         <div className="col-md-6 col-lg-5">
           <div className="card shadow">
-            <div className="card-body p-5">
+            <div className="card-body p-3 p-md-5">
               <div className="text-center mb-4">
                 <i
                   className="bi bi-shield-lock text-primary"

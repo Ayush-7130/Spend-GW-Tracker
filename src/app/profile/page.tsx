@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import MainLayout from "@/components/MainLayout";
 import { useOperationNotification } from "@/contexts/NotificationContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { useGroup } from "@/contexts/GroupContext";
 import {
   LoadingSpinner,
@@ -39,7 +40,14 @@ interface ProfileData {
 export default function ProfilePage() {
   const router = useRouter();
   const { notifySuccess, notifyError } = useOperationNotification();
+  const { logout } = useAuth();
   const { groups, activeGroup, isLoading: groupsLoading } = useGroup();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch {}
+  };
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState(true);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
@@ -527,6 +535,37 @@ export default function ProfilePage() {
                     <i className="bi bi-chevron-right"></i>
                   </Link>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Sign Out */}
+          <div className="mt-0 mt-lg-0">
+            <div
+              className="card shadow-sm mt-3"
+              style={{ borderColor: "var(--status-error)" }}
+            >
+              <div className="card-body d-flex align-items-center justify-content-between gap-3">
+                <div>
+                  <div
+                    className="fw-semibold mb-1"
+                    style={{ color: "var(--status-error)" }}
+                  >
+                    <i className="bi bi-box-arrow-right me-2"></i>
+                    Sign Out
+                  </div>
+                  <small style={{ color: "var(--text-secondary)" }}>
+                    End your current session on this device
+                  </small>
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-outline-danger btn-sm flex-shrink-0"
+                  onClick={handleLogout}
+                  aria-label="Sign out from account"
+                >
+                  Sign Out
+                </button>
               </div>
             </div>
           </div>

@@ -22,7 +22,7 @@ const NotificationBell: React.FC = () => {
 
   // Audit: NotificationBell - Add filters (unread/type) and optional text search
   const [filterType, setFilterType] = useState<
-    "all" | "unread" | "expense" | "settlement" | "group" | "user"
+    "all" | "unread" | "expense" | "settlement" | "group" | "security"
   >("all");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -214,7 +214,7 @@ const NotificationBell: React.FC = () => {
       type.includes("admin_role")
     )
       return "👥";
-    if (category === "user" || type.startsWith("user_")) return "👤";
+    if (category === "security" || type.startsWith("security_")) return "🔔";
     return "🔔";
   };
 
@@ -395,7 +395,14 @@ const NotificationBell: React.FC = () => {
               }}
             >
               {/* Type Filter Buttons */}
-              <div className="d-flex gap-1 flex-wrap mb-2">
+              <div
+                className="d-flex gap-1 mb-2 scroll-x-hidden-bar"
+                style={{
+                  overflowX: "auto",
+                  WebkitOverflowScrolling: "touch",
+                  paddingBottom: "2px",
+                }}
+              >
                 {(
                   [
                     "all",
@@ -403,7 +410,7 @@ const NotificationBell: React.FC = () => {
                     "expense",
                     "settlement",
                     "group",
-                    "user",
+                    "security",
                   ] as const
                 ).map((type) => {
                   const isActive = filterType === type;
@@ -424,8 +431,10 @@ const NotificationBell: React.FC = () => {
                       aria-pressed={pressedValue}
                       aria-label={`Filter notifications: ${label}`}
                       style={{
-                        padding: "2px 8px",
-                        fontSize: "0.7rem",
+                        padding: "4px 10px",
+                        fontSize: "0.75rem",
+                        minHeight: "30px",
+                        flexShrink: 0,
                         backgroundColor: isActive
                           ? "var(--btn-primary-bg)"
                           : "transparent",

@@ -65,7 +65,7 @@ export default function VerifyEmailPage() {
       <div className="row justify-content-center align-items-center min-vh-100">
         <div className="col-md-6 col-lg-5">
           <div className="card shadow">
-            <div className="card-body p-5 text-center">
+            <div className="card-body p-3 p-md-5 text-center">
               {status === "verifying" && (
                 <>
                   <div

@@ -551,7 +551,7 @@ const SettlementsPage: React.FC = () => {
 
   return (
     <MainLayout>
-      <div className="containerx-fluid">
+      <div className="container-fluid">
         <div className="row">
           <div className="col-12">
             {/* Header Section */}
@@ -1084,7 +1084,7 @@ const SettlementsPage: React.FC = () => {
             z-index: 1060 !important;
           }
           .table-responsive {
-            overflow: visible !important;
+            overflow-x: auto;
           }
           .table {
             position: relative;

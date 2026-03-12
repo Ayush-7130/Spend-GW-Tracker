@@ -243,7 +243,7 @@ export default function LoginHistoryPage() {
                   </div>
 
                   {/* Search Input - Audit: Login History text search */}
-                  <div style={{ minWidth: "250px" }}>
+                  <div style={{ minWidth: "0", flex: "1 1 200px" }}>
                     <SearchInput
                       value={searchQuery}
                       onChange={setSearchQuery}

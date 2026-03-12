@@ -99,12 +99,12 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
 
   return (
     <div
-      className={`d-flex justify-content-between align-items-center ${marginClass} ${className}`}
+      className={`d-flex justify-content-between align-items-start flex-wrap gap-2 ${marginClass} ${className}`}
     >
-      <div className="flex-grow-1">
+      <div className="flex-grow-1" style={{ minWidth: 0 }}>
         <h1
           className={`${config.titleClass} ${config.titleMargin}`}
-          style={{ color: colors.text.primary }}
+          style={{ color: colors.text.primary, wordBreak: "break-word" }}
         >
           {icon && (
             <i
@@ -121,7 +121,9 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
           </p>
         )}
       </div>
-      {actions && <div className="d-flex gap-2 flex-shrink-0">{actions}</div>}
+      {actions && (
+        <div className="d-flex gap-2 flex-shrink-0 flex-wrap">{actions}</div>
+      )}
     </div>
   );
 };

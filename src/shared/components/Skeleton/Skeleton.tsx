@@ -662,7 +662,7 @@ export function ExpensesSkeleton() {
 
 export function SettlementsSkeleton() {
   return (
-    <div className="containerx-fluid">
+    <div className="container-fluid">
       <div className="row">
         <div className="col-12">
           <PageHeaderSkeleton />

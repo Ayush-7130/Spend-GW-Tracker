@@ -193,7 +193,7 @@ export default function AnalyticsOverview() {
                 <>
                   <Link
                     href="/analytics/timeline"
-                    className="btn btn-outline-success btn-sm"
+                    className="btn btn-sm analytics-nav-btn"
                   >
                     <i className="bi bi-graph-up me-1"></i>
                     Timeline
@@ -201,7 +201,7 @@ export default function AnalyticsOverview() {
                   {user && (
                     <Link
                       href={`/analytics/user/${user.id}`}
-                      className="btn btn-outline-info btn-sm"
+                      className="btn btn-sm analytics-nav-btn"
                     >
                       <i className="bi bi-person-circle me-1"></i>
                       My Analytics
@@ -214,7 +214,7 @@ export default function AnalyticsOverview() {
             {/* Key Metrics Cards */}
             <div className="row mb-4">
               <div className="col-lg-3 col-md-6 mb-3">
-                <div className="card bg-primary text-white h-100">
+                <div className="card analytics-stat-card h-100">
                   <div className="card-body">
                     <div className="d-flex justify-content-between">
                       <div>
@@ -233,7 +233,7 @@ export default function AnalyticsOverview() {
               </div>
 
               <div className="col-lg-3 col-md-6 mb-3">
-                <div className="card bg-info text-white h-100">
+                <div className="card analytics-stat-card h-100">
                   <div className="card-body">
                     <div className="d-flex justify-content-between">
                       <div>
@@ -257,7 +257,7 @@ export default function AnalyticsOverview() {
               </div>
 
               <div className="col-lg-3 col-md-6 mb-3">
-                <div className="card bg-success text-white h-100">
+                <div className="card analytics-stat-card h-100">
                   <div className="card-body">
                     <div className="d-flex justify-content-between">
                       <div>
@@ -274,7 +274,7 @@ export default function AnalyticsOverview() {
               </div>
 
               <div className="col-lg-3 col-md-6 mb-3">
-                <div className="card bg-warning text-white h-100">
+                <div className="card analytics-stat-card h-100">
                   <div className="card-body">
                     <div className="d-flex justify-content-between">
                       <div>
@@ -298,21 +298,15 @@ export default function AnalyticsOverview() {
               {/* Top Categories */}
               <div className="col-lg-4 mb-4">
                 <div className="card h-100">
-                  <div className="card-header border-0 bg-transparent pt-3 pb-0 px-3">
+                  <div className="card-header">
                     <SectionHeader
                       title="Top Spending Categories"
                       icon="bi bi-bar-chart"
                     />
                   </div>
                   <div
-                    className="card-body p-0"
-                    style={{
-                      maxHeight: "350px",
-                      overflowY: "auto",
-                      backgroundColor: "var(--card-bg)",
-                      borderColor: "var(--card-border)",
-                      boxShadow: "var(--card-shadow)",
-                    }}
+                    className="card-body"
+                    style={{ maxHeight: "350px", overflowY: "auto" }}
                   >
                     <Table
                       config={{
@@ -382,7 +376,7 @@ export default function AnalyticsOverview() {
               {/* Category Distribution Pie Chart */}
               <div className="col-lg-8 mb-4">
                 <div className="card h-100">
-                  <div className="card-header border-0 bg-transparent pt-3 pb-0 px-3">
+                  <div className="card-header">
                     <SectionHeader
                       title="Category Distribution"
                       icon="bi bi-pie-chart"

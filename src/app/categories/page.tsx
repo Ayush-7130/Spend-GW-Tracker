@@ -31,6 +31,7 @@ interface Category {
   name: string;
   description: string;
   subcategories: Subcategory[];
+  isDefault?: boolean;
   createdAt: string;
 }
 
@@ -346,57 +347,69 @@ export default function CategoriesPage() {
                 <div key={category._id} className="col-md-6 col-lg-4 mb-4">
                   <div className="card h-100">
                     <div className="card-header d-flex justify-content-between align-items-center">
-                      <h5
-                        className="mb-0"
-                        aria-label={category.name || "Category"}
-                      >
-                        {category.name}
-                      </h5>
-                      <div className="dropdown">
-                        <button
-                          className="btn btn-sm btn-outline-secondary dropdown-toggle"
-                          type="button"
-                          id={`category-dropdown-${category._id}`}
-                          data-bs-toggle="dropdown"
-                          aria-label={`Actions for ${category.name}`}
-                          onClick={() =>
-                            setOpenDropdownId(
-                              openDropdownId === category._id
-                                ? null
-                                : category._id
-                            )
-                          }
+                      <div className="d-flex align-items-center gap-2">
+                        <h5
+                          className="mb-0"
+                          aria-label={category.name || "Category"}
                         >
-                          <i className="bi bi-three-dots"></i>
-                        </button>
-                        <ul
-                          className={`dropdown-menu ${openDropdownId === category._id ? "show" : ""}`}
-                          aria-labelledby={`category-dropdown-${category._id}`}
-                        >
-                          <li>
-                            <button
-                              className="dropdown-item"
-                              onClick={() => {
-                                handleEdit(category);
-                                setOpenDropdownId(null);
-                              }}
-                            >
-                              <i className="bi bi-pencil me-2"></i> Edit
-                            </button>
-                          </li>
-                          <li>
-                            <button
-                              className="dropdown-item text-danger"
-                              onClick={() => {
-                                handleDelete(category._id);
-                                setOpenDropdownId(null);
-                              }}
-                            >
-                              <i className="bi bi-trash me-2"></i> Delete
-                            </button>
-                          </li>
-                        </ul>
+                          {category.name}
+                        </h5>
+                        {category.isDefault && (
+                          <span
+                            className="badge bg-secondary"
+                            title="Default category — visible to all groups"
+                          >
+                            Default
+                          </span>
+                        )}
                       </div>
+                      {!category.isDefault && (
+                        <div className="dropdown">
+                          <button
+                            className="btn btn-sm btn-outline-secondary dropdown-toggle"
+                            type="button"
+                            id={`category-dropdown-${category._id}`}
+                            data-bs-toggle="dropdown"
+                            aria-label={`Actions for ${category.name}`}
+                            onClick={() =>
+                              setOpenDropdownId(
+                                openDropdownId === category._id
+                                  ? null
+                                  : category._id
+                              )
+                            }
+                          >
+                            <i className="bi bi-three-dots"></i>
+                          </button>
+                          <ul
+                            className={`dropdown-menu ${openDropdownId === category._id ? "show" : ""}`}
+                            aria-labelledby={`category-dropdown-${category._id}`}
+                          >
+                            <li>
+                              <button
+                                className="dropdown-item"
+                                onClick={() => {
+                                  handleEdit(category);
+                                  setOpenDropdownId(null);
+                                }}
+                              >
+                                <i className="bi bi-pencil me-2"></i> Edit
+                              </button>
+                            </li>
+                            <li>
+                              <button
+                                className="dropdown-item text-danger"
+                                onClick={() => {
+                                  handleDelete(category._id);
+                                  setOpenDropdownId(null);
+                                }}
+                              >
+                                <i className="bi bi-trash me-2"></i> Delete
+                              </button>
+                            </li>
+                          </ul>
+                        </div>
+                      )}
                     </div>
                     <div className="card-body">
                       <p className="card-text text-muted mb-3">
@@ -509,8 +522,8 @@ export default function CategoriesPage() {
             </div>
 
             {formData.subcategories.map((sub, index) => (
-              <div key={index} className="row mb-2">
-                <div className="col-5">
+              <div key={index} className="row g-2 mb-2 align-items-end">
+                <div className="col-12 col-sm-5">
                   <InputField
                     label=""
                     type="text"
@@ -522,7 +535,7 @@ export default function CategoriesPage() {
                     size="sm"
                   />
                 </div>
-                <div className="col-5">
+                <div className="col-10 col-sm-5">
                   <InputField
                     label=""
                     type="text"
@@ -534,13 +547,14 @@ export default function CategoriesPage() {
                     size="sm"
                   />
                 </div>
-                <div className="col-2">
+                <div className="col-2 col-sm-2">
                   <button
                     type="button"
-                    className="btn btn-outline-danger"
+                    className="btn btn-outline-danger btn-sm"
                     onClick={() => removeSubcategory(index)}
                     disabled={formData.subcategories.length === 1}
                     aria-label="Remove subcategory"
+                    style={{ minWidth: "38px", minHeight: "38px" }}
                   >
                     <i className="bi bi-trash"></i>
                   </button>

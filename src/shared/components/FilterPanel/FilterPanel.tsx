@@ -50,8 +50,10 @@ export default function FilterPanel({
           }
         : {};
 
-    // Add responsive styles for mobile
-    const mobileColStyle = window.innerWidth <= 768 ? {} : colStyle;
+    // Add responsive styles for mobile - use CSS media queries instead of window check
+    // On mobile, let Bootstrap's col-12 class handle full-width layout
+    const mobileColStyle =
+      typeof window !== "undefined" && window.innerWidth <= 768 ? {} : colStyle;
 
     switch (filter.type) {
       case "text":
@@ -159,15 +161,22 @@ export default function FilterPanel({
     <div className={`card mb-4 ${className}`}>
       <div className="card-body">
         {title && (
-          <div className="card-header border-0 bg-transparent px-0 pt-0">
-            <h6 className="mb-3">{title}</h6>
-          </div>
+          <h6
+            className="mb-3 fw-semibold text-secondary"
+            style={{
+              fontSize: "0.8125rem",
+              textTransform: "uppercase",
+              letterSpacing: "0.05em",
+            }}
+          >
+            {title}
+          </h6>
         )}
 
         <div className="row g-3">
           {filters.map(renderFilter)}
 
-          <div className="col-md-1 col-12">
+          <div className="col-md-2 col-12">
             <button
               className={`btn btn-${clearButtonVariant} w-100`}
               onClick={onClear}

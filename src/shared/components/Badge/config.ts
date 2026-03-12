@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, CSSProperties } from "react";
 
 // User badge configuration - now accepts any username
 export interface UserBadgeProps {
@@ -33,6 +33,7 @@ export interface BadgeProps {
   className?: string;
   outline?: boolean;
   title?: string;
+  style?: CSSProperties;
 }
 
 // Helper function to generate user config dynamically for any user

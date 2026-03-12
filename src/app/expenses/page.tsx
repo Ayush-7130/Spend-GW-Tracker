@@ -864,7 +864,7 @@ function ExpensesContent() {
               className="btn btn-primary d-inline-flex align-items-center justify-content-center"
               disabled={operationLoading}
               aria-label={editingExpense ? "Update Expense" : "Add Expense"}
-              style={{ minWidth: "130px" }}
+              style={{ minWidth: "0", flex: "1 1 auto" }}
             >
               {operationLoading ? (
                 <>
@@ -1389,17 +1389,34 @@ export default function ExpensesPage() {
     <Suspense
       fallback={
         <MainLayout>
-          <div className="max-w-7xl mx-auto p-4">
-            <div className="flex justify-between items-center mb-6">
-              <h1 className="text-3xl font-bold">Expenses</h1>
+          <div className="container-fluid py-3">
+            <div className="d-flex justify-content-between align-items-center mb-4">
+              <h1 className="h3">Expenses</h1>
             </div>
-            <div className="bg-white rounded-lg shadow p-6">
-              <div className="animate-pulse">
-                <div className="h-4 bg-gray-200 rounded w-1/4 mb-4"></div>
-                <div className="space-y-2">
-                  <div className="h-4 bg-gray-200 rounded"></div>
-                  <div className="h-4 bg-gray-200 rounded"></div>
-                  <div className="h-4 bg-gray-200 rounded"></div>
+            <div className="card">
+              <div className="card-body">
+                <div
+                  className="skeleton-pulse"
+                  style={{
+                    height: "16px",
+                    width: "25%",
+                    marginBottom: "1rem",
+                    borderRadius: "4px",
+                  }}
+                ></div>
+                <div className="d-flex flex-column gap-2">
+                  <div
+                    className="skeleton-pulse"
+                    style={{ height: "16px", borderRadius: "4px" }}
+                  ></div>
+                  <div
+                    className="skeleton-pulse"
+                    style={{ height: "16px", borderRadius: "4px" }}
+                  ></div>
+                  <div
+                    className="skeleton-pulse"
+                    style={{ height: "16px", borderRadius: "4px" }}
+                  ></div>
                 </div>
               </div>
             </div>
