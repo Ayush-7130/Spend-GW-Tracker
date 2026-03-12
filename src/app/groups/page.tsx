@@ -210,21 +210,23 @@ export default function GroupsPage() {
                   <div
                     className={`card h-100 ${isActive ? "border-primary" : ""}`}
                   >
-                    {isActive && (
-                      <div
-                        className="card-header"
-                        style={{
-                          backgroundColor: "var(--btn-primary-bg)",
-                          color: "var(--btn-primary-text)",
-                          borderColor: "var(--btn-primary-bg)",
-                        }}
-                      >
-                        <small className="d-flex align-items-center gap-2">
-                          <i className="bi bi-check-circle-fill"></i>
-                          <span>Active Group</span>
-                        </small>
-                      </div>
-                    )}
+                    <div
+                      className={`card-header ${isActive ? "group-card-active-header" : "group-card-inactive-header"}`}
+                    >
+                      <small className="d-flex align-items-center gap-2">
+                        {isActive ? (
+                          <>
+                            <i className="bi bi-check-circle-fill"></i>
+                            <span>Active Group</span>
+                          </>
+                        ) : (
+                          <>
+                            <i className="bi bi-people"></i>
+                            <span>Group</span>
+                          </>
+                        )}
+                      </small>
+                    </div>
                     <div className="card-body">
                       <h5
                         className="card-title d-flex align-items-center gap-2 mb-3"
@@ -264,7 +266,7 @@ export default function GroupsPage() {
                         </div>
                       </div>
                     </div>
-                    <div className="card-footer bg-transparent border-top">
+                    <div className="card-footer border-top">
                       <div className="d-flex gap-2">
                         {!isActive && (
                           <button
@@ -314,13 +316,13 @@ export default function GroupsPage() {
                               ></i>
                             </button>
                             <ul
-                              className="dropdown-menu dropdown-menu-end"
+                              className="dropdown-menu dropdown-menu-end py-1"
                               aria-labelledby={`group-dropdown-${group._id}`}
                             >
                               {isAdmin ? (
                                 <li>
                                   <button
-                                    className="dropdown-item text-danger"
+                                    className="dropdown-item text-danger py-0"
                                     onClick={() =>
                                       handleDeleteGroup(group._id, group.name)
                                     }

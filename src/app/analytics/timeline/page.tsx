@@ -197,7 +197,7 @@ export default function TimelineAnalysis() {
                 <>
                   <Link
                     href="/analytics/overview"
-                    className="btn btn-outline-primary btn-sm"
+                    className="btn btn-sm analytics-nav-btn"
                   >
                     <i className="bi bi-speedometer2 me-1"></i>
                     Overview
@@ -205,7 +205,7 @@ export default function TimelineAnalysis() {
                   {user && (
                     <Link
                       href={`/analytics/user/${user.id}`}
-                      className="btn btn-outline-info btn-sm"
+                      className="btn btn-sm analytics-nav-btn"
                     >
                       <i className="bi bi-person-circle me-1"></i>
                       My Analytics
@@ -223,108 +223,100 @@ export default function TimelineAnalysis() {
                   icon="bi bi-calendar-range"
                   marginBottom={true}
                 />
-                <div className="row align-items-end">
-                  <div className="col-md-6">
-                    <div className="btn-group w-100" role="group">
-                      {(
-                        [
-                          "week",
-                          "month",
-                          "quarter",
-                          "year",
-                          "custom",
-                        ] as PeriodType[]
-                      ).map((period) => (
-                        <button
-                          key={period}
-                          type="button"
-                          className={`btn ${
-                            selectedPeriod === period
-                              ? "btn-primary"
-                              : "btn-outline-primary"
-                          }`}
-                          onClick={() => handlePeriodChange(period)}
-                          aria-label={`Select ${period} period`}
-                        >
-                          {period.charAt(0).toUpperCase() + period.slice(1)}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                <div className="d-flex align-items-center gap-2 flex-wrap">
                   {selectedPeriod === "custom" && (
-                    <div className="col-md-6">
-                      <div className="row g-2">
-                        <div className="col-6">
-                          <input
-                            type={customStartDate ? "date" : "text"}
-                            id="startDate"
-                            className="form-control form-control-sm"
-                            placeholder="Start Date"
-                            value={customStartDate}
-                            onChange={(e) => setCustomStartDate(e.target.value)}
-                            autoComplete="off"
-                            onFocus={(e) => {
-                              e.target.type = "date";
-                              setTimeout(() => {
-                                if (e.target.showPicker) e.target.showPicker();
-                              }, 0);
-                            }}
-                            onBlur={(e) => {
-                              if (!e.target.value) e.target.type = "text";
-                            }}
-                            onKeyDown={(e) => {
-                              if (e.currentTarget.type === "text") {
-                                e.currentTarget.type = "date";
-                                setTimeout(() => {
-                                  if (e.currentTarget.showPicker)
-                                    e.currentTarget.showPicker();
-                                }, 0);
-                              }
-                            }}
-                            style={{
-                              fontSize: "0.875rem",
-                              padding: "0.375rem 0.5rem",
-                              cursor: "pointer",
-                            }}
-                          />
-                        </div>
-                        <div className="col-6">
-                          <input
-                            type={customEndDate ? "date" : "text"}
-                            id="endDate"
-                            className="form-control form-control-sm"
-                            placeholder="End Date"
-                            value={customEndDate}
-                            onChange={(e) => setCustomEndDate(e.target.value)}
-                            autoComplete="off"
-                            onFocus={(e) => {
-                              e.target.type = "date";
-                              setTimeout(() => {
-                                if (e.target.showPicker) e.target.showPicker();
-                              }, 0);
-                            }}
-                            onBlur={(e) => {
-                              if (!e.target.value) e.target.type = "text";
-                            }}
-                            onKeyDown={(e) => {
-                              if (e.currentTarget.type === "text") {
-                                e.currentTarget.type = "date";
-                                setTimeout(() => {
-                                  if (e.currentTarget.showPicker)
-                                    e.currentTarget.showPicker();
-                                }, 0);
-                              }
-                            }}
-                            style={{
-                              fontSize: "0.875rem",
-                              padding: "0.375rem 0.5rem",
-                              cursor: "pointer",
-                            }}
-                          />
-                        </div>
-                      </div>
+                    <div className="d-flex gap-2 flex-grow-1">
+                      <input
+                        type={customStartDate ? "date" : "text"}
+                        id="startDate"
+                        className="form-control form-control-sm"
+                        placeholder="Start Date"
+                        value={customStartDate}
+                        onChange={(e) => setCustomStartDate(e.target.value)}
+                        autoComplete="off"
+                        onFocus={(e) => {
+                          e.target.type = "date";
+                          setTimeout(() => {
+                            if (e.target.showPicker) e.target.showPicker();
+                          }, 0);
+                        }}
+                        onBlur={(e) => {
+                          if (!e.target.value) e.target.type = "text";
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.currentTarget.type === "text") {
+                            e.currentTarget.type = "date";
+                            setTimeout(() => {
+                              if (e.currentTarget.showPicker)
+                                e.currentTarget.showPicker();
+                            }, 0);
+                          }
+                        }}
+                        style={{
+                          fontSize: "0.875rem",
+                          padding: "0.375rem 0.5rem",
+                          cursor: "pointer",
+                        }}
+                      />
+                      <input
+                        type={customEndDate ? "date" : "text"}
+                        id="endDate"
+                        className="form-control form-control-sm"
+                        placeholder="End Date"
+                        value={customEndDate}
+                        onChange={(e) => setCustomEndDate(e.target.value)}
+                        autoComplete="off"
+                        onFocus={(e) => {
+                          e.target.type = "date";
+                          setTimeout(() => {
+                            if (e.target.showPicker) e.target.showPicker();
+                          }, 0);
+                        }}
+                        onBlur={(e) => {
+                          if (!e.target.value) e.target.type = "text";
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.currentTarget.type === "text") {
+                            e.currentTarget.type = "date";
+                            setTimeout(() => {
+                              if (e.currentTarget.showPicker)
+                                e.currentTarget.showPicker();
+                            }, 0);
+                          }
+                        }}
+                        style={{
+                          fontSize: "0.875rem",
+                          padding: "0.375rem 0.5rem",
+                          cursor: "pointer",
+                        }}
+                      />
                     </div>
                   )}
+                  <div className="d-flex flex-wrap gap-1 ms-auto" role="group">
+                    {(
+                      [
+                        "week",
+                        "month",
+                        "quarter",
+                        "year",
+                        "custom",
+                      ] as PeriodType[]
+                    ).map((period) => (
+                      <button
+                        key={period}
+                        type="button"
+                        className={`btn btn-sm ${
+                          selectedPeriod === period
+                            ? "btn-primary"
+                            : "btn-outline-primary"
+                        }`}
+                        onClick={() => handlePeriodChange(period)}
+                        aria-label={`Select ${period} period`}
+                      >
+                        {period.charAt(0).toUpperCase() + period.slice(1)}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

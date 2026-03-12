@@ -197,6 +197,11 @@ export function SearchInput({
             style={{
               color: "var(--text-muted, #6c757d)",
               lineHeight: 1,
+              minWidth: "28px",
+              minHeight: "28px",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
             <i className="bi bi-x-circle-fill" style={{ fontSize: "14px" }} />

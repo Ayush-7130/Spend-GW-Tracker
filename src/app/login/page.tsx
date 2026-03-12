@@ -101,7 +101,7 @@ export default function LoginPage() {
       <div className="min-vh-100 d-flex align-items-center">
         <div className="container">
           <div className="row justify-content-center">
-            <div className="col-md-6 col-lg-4">
+            <div className="col-md-6 col-lg-5">
               <div className="auth-card">
                 <div
                   className="card-header text-white text-center"

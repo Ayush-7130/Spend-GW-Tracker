@@ -101,7 +101,7 @@ export function GroupSelector() {
             setIsOpen(false);
           }
         }}
-        style={{ minWidth: "200px" }}
+        style={{ minWidth: "0", maxWidth: "200px" }}
       >
         <i className="bi bi-people-fill" aria-hidden="true"></i>
         <span className="flex-grow-1 text-start text-truncate">
@@ -111,7 +111,7 @@ export function GroupSelector() {
       <ul
         className={`dropdown-menu list-unstyled m-0 p-0 ${isOpen ? "show" : ""}`}
         aria-labelledby="groupDropdown"
-        style={{ minWidth: "250px" }}
+        style={{ minWidth: "200px", maxWidth: "min(250px, 80vw)" }}
       >
         <li
           className="dropdown-header d-flex justify-content-between align-items-center"

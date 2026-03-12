@@ -13,6 +13,7 @@ interface Category {
   name: string;
   description: string;
   subcategories: Array<{ name: string; description: string }>;
+  isDefault?: boolean;
   groupId?: any;
   createdAt: Date;
   updatedAt?: Date;
@@ -25,9 +26,11 @@ export const GET = withGroupAuth(
       const client = await clientPromise;
       const db = client.db("spend-tracker");
 
+      // Fetch both group-specific and global default categories
       const categories = await db
         .collection<Category>("categories")
-        .find({ groupId: group._id })
+        .find({ $or: [{ groupId: group._id }, { isDefault: true }] })
+        .sort({ isDefault: -1, createdAt: 1 }) // defaults first, then group-specific
         .toArray();
 
       // FIX M66: Serialize to explicit DTO to avoid ObjectId/Date serialization issues
@@ -38,6 +41,7 @@ export const GET = withGroupAuth(
         subcategories: cat.subcategories || [],
         icon: cat.icon,
         color: cat.color,
+        isDefault: cat.isDefault === true,
         groupId: cat.groupId?.toString(),
         createdAt:
           cat.createdAt instanceof Date

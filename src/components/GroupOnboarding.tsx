@@ -244,7 +244,7 @@ export default function GroupOnboarding() {
           </>
         )}
       </div>
-      <div className="d-flex gap-2 justify-content-end mt-3">
+      <div className="d-flex flex-wrap gap-2 justify-content-end mt-3">
         <button
           type="button"
           className="btn btn-outline-secondary"

@@ -11,7 +11,7 @@ import Badge from "@/shared/components/Badge/Badge";
 
 export default function Navigation() {
   const pathname = usePathname();
-  const { user, logout, isAuthenticated } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const { activeGroup } = useGroup();
   const { theme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,12 +29,6 @@ export default function Navigation() {
     },
     { href: "/analytics", label: "Analytics", icon: "bi-graph-up" },
   ];
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch {}
-  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -163,55 +157,53 @@ export default function Navigation() {
                   style={{
                     backgroundColor: "var(--navbar-mobile-user-bg)",
                     borderRadius: "0.5rem",
-                    padding: "1rem",
+                    padding: "0.875rem 1rem",
                     border: "1px solid var(--navbar-mobile-user-border)",
                   }}
                 >
-                  <div className="d-flex align-items-center mb-3">
-                    <i
-                      className="bi bi-person-circle fs-4 me-2"
-                      style={{ color: "var(--navbar-text)" }}
-                    ></i>
-                    <div
+                  <div className="d-flex align-items-center justify-content-between gap-2 mb-3">
+                    <span
+                      className="fw-semibold"
                       style={{
                         color: "var(--navbar-text)",
-                        flex: 1,
+                        fontSize: "0.9375rem",
+                        lineHeight: "1.3",
                         minWidth: 0,
+                        flex: 1,
                       }}
                     >
-                      <div className="d-flex align-items-center gap-2 flex-wrap">
-                        <span
-                          className="fw-bold text-truncate"
-                          style={{ maxWidth: "120px" }}
+                      {user?.name}
+                    </span>
+                    {activeGroup && (
+                      <Link
+                        href={`/groups/${activeGroup._id}`}
+                        onClick={closeMenu}
+                        style={{ textDecoration: "none", flexShrink: 0 }}
+                        title={`Go to ${activeGroup.name}`}
+                      >
+                        <Badge
+                          variant="primary"
+                          style={{ fontSize: "0.6875rem", padding: "3px 7px" }}
                         >
-                          {user?.name}
-                        </span>
-                        {activeGroup && (
-                          <Badge
-                            variant="primary"
-                            title={`${activeGroup.name} (${activeGroup.groupId})`}
+                          <i
+                            className="bi bi-people-fill me-1"
+                            style={{ fontSize: "0.625rem" }}
+                          ></i>
+                          <span
+                            className="text-truncate d-inline-block"
+                            style={{
+                              maxWidth: "72px",
+                              verticalAlign: "middle",
+                            }}
                           >
-                            <i className="bi bi-people-fill me-1"></i>
-                            <span
-                              className="text-truncate d-inline-block"
-                              style={{
-                                maxWidth: "80px",
-                                verticalAlign: "middle",
-                              }}
-                            >
-                              {activeGroup.name}
-                            </span>{" "}
-                            ({activeGroup.groupId})
-                          </Badge>
-                        )}
-                      </div>
-                      <small className="opacity-75 d-block text-truncate">
-                        {user?.email}
-                      </small>
-                    </div>
+                            {activeGroup.name}
+                          </span>
+                        </Badge>
+                      </Link>
+                    )}
                   </div>
 
-                  {/* Profile and Sign Out Buttons in Row */}
+                  {/* Profile and My Groups Buttons in Row */}
                   <div className="d-flex gap-2">
                     <Link
                       href="/profile"
@@ -235,8 +227,10 @@ export default function Navigation() {
                       My Profile
                     </Link>
 
-                    <button
+                    <Link
+                      href="/groups"
                       className="btn btn-sm flex-fill"
+                      onClick={closeMenu}
                       style={{
                         backgroundColor: "transparent",
                         borderColor: "var(--border-primary)",
@@ -246,18 +240,11 @@ export default function Navigation() {
                         justifyContent: "center",
                         whiteSpace: "nowrap",
                       }}
-                      onClick={() => {
-                        closeMenu();
-                        handleLogout();
-                      }}
-                      aria-label="Sign out from account"
+                      aria-label="Manage groups"
                     >
-                      <i
-                        className="bi bi-box-arrow-right me-1"
-                        aria-hidden="true"
-                      ></i>
-                      Sign Out
-                    </button>
+                      <i className="bi bi-people me-1" aria-hidden="true"></i>
+                      My Groups
+                    </Link>
                   </div>
                 </div>
 
@@ -359,34 +346,51 @@ export default function Navigation() {
                   </span>
                 </button>
                 <ul
-                  className={`dropdown-menu dropdown-menu-end ${isDropdownOpen ? "show" : ""}`}
+                  className={`dropdown-menu ${isDropdownOpen ? "show" : ""}`}
                   aria-labelledby="userDropdown"
-                  style={{ minWidth: "280px", right: 0, top: "150%" }}
+                  style={{
+                    minWidth: "280px",
+                    top: "100%",
+                    marginTop: "8px",
+                    transform: "translateX(-15%)",
+                  }}
                 >
                   <li>
-                    <span className="dropdown-item-text px-3 py-2">
+                    <span className="dropdown-item-text">
                       <div className="d-flex align-items-center">
-                        <i
-                          className="bi bi-person-circle fs-4 me-3"
-                          style={{ color: "var(--icon-accent)" }}
-                        ></i>
-                        <div style={{ flex: 1, minWidth: 0 }}>
-                          <div className="d-flex align-items-center gap-2 flex-wrap">
-                            <span
-                              className="fw-bold text-truncate"
-                              style={{
-                                color: "var(--text-primary)",
-                                maxWidth: "120px",
-                              }}
+                        <div
+                          className="d-flex align-items-center justify-content-between gap-2"
+                          style={{ flex: 1, minWidth: 0 }}
+                        >
+                          <span
+                            className="fw-semibold text-truncate"
+                            style={{
+                              color: "var(--text-primary)",
+                              fontSize: "1.1375rem",
+                              flex: 1,
+                              minWidth: 0,
+                            }}
+                          >
+                            {user?.name}
+                          </span>
+                          {activeGroup && (
+                            <Link
+                              href={`/groups/${activeGroup._id}`}
+                              onClick={closeDropdown}
+                              style={{ textDecoration: "none", flexShrink: 0 }}
+                              title={`Go to ${activeGroup.name}`}
                             >
-                              {user?.name}
-                            </span>
-                            {activeGroup && (
                               <Badge
                                 variant="primary"
-                                title={`${activeGroup.name} (${activeGroup.groupId})`}
+                                style={{
+                                  fontSize: "0.7375rem",
+                                  padding: "2px 4px",
+                                }}
                               >
-                                <i className="bi bi-people-fill me-1"></i>
+                                <i
+                                  className="bi bi-people-fill me-1"
+                                  style={{ fontSize: "0.625rem" }}
+                                ></i>
                                 <span
                                   className="text-truncate d-inline-block"
                                   style={{
@@ -395,17 +399,10 @@ export default function Navigation() {
                                   }}
                                 >
                                   {activeGroup.name}
-                                </span>{" "}
-                                ({activeGroup.groupId})
+                                </span>
                               </Badge>
-                            )}
-                          </div>
-                          <small
-                            className="d-block text-truncate"
-                            style={{ color: "var(--text-tertiary)" }}
-                          >
-                            {user?.email}
-                          </small>
+                            </Link>
+                          )}
                         </div>
                       </div>
                     </span>
@@ -430,31 +427,20 @@ export default function Navigation() {
                     </Link>
                   </li>
                   <li>
-                    <hr className="dropdown-divider my-2" />
-                  </li>
-                  <li>
-                    <button
+                    <Link
+                      href="/groups"
                       className="dropdown-item py-2 px-3"
-                      style={{
-                        color: "var(--text-primary)",
-                        background: "transparent",
-                        border: "none",
-                        width: "100%",
-                        textAlign: "left",
-                      }}
-                      onClick={() => {
-                        closeDropdown();
-                        handleLogout();
-                      }}
-                      aria-label="Sign out from account"
+                      onClick={closeDropdown}
+                      style={{ color: "var(--text-primary)" }}
+                      aria-label="Manage groups"
                     >
                       <i
-                        className="bi bi-box-arrow-right me-2"
+                        className="bi bi-people me-2"
                         style={{ color: "var(--icon-primary)" }}
                         aria-hidden="true"
                       ></i>
-                      Sign Out
-                    </button>
+                      My Groups
+                    </Link>
                   </li>
                 </ul>
               </div>

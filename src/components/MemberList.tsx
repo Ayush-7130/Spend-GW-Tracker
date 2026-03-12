@@ -138,10 +138,10 @@ export function MemberList({ groupId, members }: MemberListProps) {
                       isCurrentUser(member.userId) ? "member-highlight" : ""
                     }`}
                   >
-                    <div className="d-flex align-items-center gap-3">
+                    <div className="d-flex align-items-center gap-2">
                       {/* Avatar */}
                       <div
-                        className="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center flex-shrink-0 fw-bold"
+                        className="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center flex-shrink-0 fw-bold member-avatar"
                         style={{
                           width: "48px",
                           height: "48px",
@@ -153,26 +153,31 @@ export function MemberList({ groupId, members }: MemberListProps) {
                       </div>
 
                       {/* Member Info */}
-                      <div className="flex-grow-1">
-                        <div className="d-flex align-items-center gap-2 mb-1">
-                          <h6 className="mb-0">
+                      <div className="flex-grow-1 min-width-0">
+                        <div className="d-flex align-items-center gap-1 mb-1 flex-wrap">
+                          <span
+                            className="fw-semibold text-truncate"
+                            style={{ fontSize: "0.9375rem" }}
+                          >
                             {displayName}
-                            {isCurrentUser(member.userId) && (
-                              <Badge variant="info" className="ms-2">
-                                You
-                              </Badge>
-                            )}
-                          </h6>
+                          </span>
+                          {isCurrentUser(member.userId) && (
+                            <Badge variant="info" size="sm">
+                              You
+                            </Badge>
+                          )}
                           {member.role === "admin" && (
-                            <Badge variant="warning">
+                            <Badge variant="warning" size="sm">
                               <i className="bi bi-shield-fill-check me-1"></i>
                               Admin
                             </Badge>
                           )}
                         </div>
-                        <small className="text-muted">
+                        <small
+                          className="text-muted d-block"
+                          style={{ fontSize: "0.75rem" }}
+                        >
                           <i className="bi bi-calendar-check me-1"></i>
-                          Joined{" "}
                           {new Date(member.joinedAt).toLocaleDateString(
                             "en-US",
                             {
@@ -241,13 +246,6 @@ export function MemberList({ groupId, members }: MemberListProps) {
                           )}
                         </div>
                       )}
-
-                      {isCurrentUser(member.userId) && (
-                        <div className="text-muted small">
-                          <i className="bi bi-info-circle me-1"></i>
-                          That&apos;s you!
-                        </div>
-                      )}
                     </div>
                   </div>
                 );
@@ -286,7 +284,7 @@ export function MemberList({ groupId, members }: MemberListProps) {
                         <div className="d-flex align-items-center gap-3">
                           {/* Avatar */}
                           <div
-                            className="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center flex-shrink-0 fw-bold"
+                            className="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center flex-shrink-0 fw-bold member-avatar"
                             style={{
                               width: "48px",
                               height: "48px",

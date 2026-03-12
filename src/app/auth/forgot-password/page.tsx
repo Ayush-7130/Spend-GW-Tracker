@@ -46,7 +46,7 @@ export default function ForgotPasswordPage() {
       <div className="row justify-content-center align-items-center min-vh-100">
         <div className="col-md-6 col-lg-5">
           <div className="card shadow">
-            <div className="card-body p-5">
+            <div className="card-body p-3 p-md-5">
               <div className="text-center mb-4">
                 <i
                   className="bi bi-key text-primary"

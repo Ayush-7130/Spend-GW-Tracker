@@ -141,10 +141,10 @@ export default function GroupDetailPage({
             ]}
           />
 
-          <div className="d-flex justify-content-between align-items-center">
-            <div>
+          <div className="d-flex justify-content-between align-items-start flex-wrap gap-2">
+            <div style={{ minWidth: 0 }}>
               <h1
-                className="h2 mb-1 d-flex align-items-center gap-2"
+                className="h2 mb-1 d-flex align-items-center gap-2 flex-wrap"
                 aria-label={group.name || "Group details"}
               >
                 <i className="bi bi-people-fill text-primary"></i>
@@ -172,7 +172,6 @@ export default function GroupDetailPage({
               groupName={group.name}
               groupDescription={group.description}
               groupCode={group.groupId}
-              allowMemberInvites={group.settings?.allowMemberInvites}
               requireApproval={group.settings?.requireApproval}
               isAdmin={isAdmin}
             />

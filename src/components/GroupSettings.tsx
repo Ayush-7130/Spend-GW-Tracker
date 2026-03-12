@@ -9,7 +9,6 @@ interface GroupSettingsProps {
   groupName: string;
   groupDescription?: string;
   groupCode: string;
-  allowMemberInvites?: boolean;
   requireApproval?: boolean;
   isAdmin?: boolean;
 }
@@ -19,7 +18,6 @@ export function GroupSettings({
   groupName: initialName,
   groupDescription: initialDescription,
   groupCode,
-  allowMemberInvites: initialAllowMemberInvites,
   requireApproval: initialRequireApproval,
   isAdmin = false,
 }: GroupSettingsProps) {
@@ -27,9 +25,6 @@ export function GroupSettings({
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(initialName);
   const [description, setDescription] = useState(initialDescription || "");
-  const [allowMemberInvites, setAllowMemberInvites] = useState(
-    initialAllowMemberInvites ?? true
-  );
   const [requireApproval, setRequireApproval] = useState(
     initialRequireApproval ?? true
   );
@@ -67,7 +62,6 @@ export function GroupSettings({
         name: name.trim(),
         description: description.trim() || undefined,
         settings: {
-          allowMemberInvites,
           requireApproval,
         },
       } as any);
@@ -81,7 +75,6 @@ export function GroupSettings({
   const handleCancel = () => {
     setName(initialName);
     setDescription(initialDescription || "");
-    setAllowMemberInvites(initialAllowMemberInvites ?? true);
     setRequireApproval(initialRequireApproval ?? true);
     setErrors({});
     setIsEditing(false);
@@ -126,13 +119,13 @@ export function GroupSettings({
             <input
               id="group-code-input"
               type="text"
-              className="form-control form-control-lg text-center fw-bold"
+              className="form-control text-center fw-bold"
               value={groupCode}
               readOnly
               aria-label="Group code"
               style={{
-                letterSpacing: "0.3em",
-                fontSize: "1.5rem",
+                letterSpacing: "0.2em",
+                fontSize: "clamp(0.9rem, 4vw, 1.25rem)",
                 fontFamily: "monospace",
               }}
             />
@@ -179,7 +172,10 @@ export function GroupSettings({
                 disabled={isLoading}
               />
               {errors.name && (
-                <div className="invalid-feedback d-block">{errors.name}</div>
+                <div className="invalid-feedback d-block">
+                  <i className="bi bi-exclamation-circle me-1"></i>
+                  {errors.name}
+                </div>
               )}
               <div className="form-text">{name.length}/50 characters</div>
             </>
@@ -211,6 +207,7 @@ export function GroupSettings({
               />
               {errors.description && (
                 <div className="invalid-feedback d-block">
+                  <i className="bi bi-exclamation-circle me-1"></i>
                   {errors.description}
                 </div>
               )}
@@ -230,23 +227,6 @@ export function GroupSettings({
         {/* Settings */}
         <div className="border-top pt-4">
           <h6 className="fw-semibold mb-3">Permissions</h6>
-
-          <div className="form-check form-switch mb-3">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              id="allowMemberInvites"
-              checked={allowMemberInvites}
-              onChange={(e) => setAllowMemberInvites(e.target.checked)}
-              disabled={!isEditing || isLoading}
-            />
-            <label className="form-check-label" htmlFor="allowMemberInvites">
-              Allow members to invite others
-            </label>
-            <div className="form-text small">
-              When enabled, any member can share the group code
-            </div>
-          </div>
 
           <div className="form-check form-switch mb-3">
             <input

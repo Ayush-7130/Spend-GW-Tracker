@@ -155,6 +155,11 @@ export const InputField: React.FC<
               zIndex: 10,
               textDecoration: "none",
               color: "var(--text-muted)",
+              minWidth: "44px",
+              minHeight: "44px",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
             aria-label={showPassword ? "Hide password" : "Show password"}
             aria-controls={fieldId}

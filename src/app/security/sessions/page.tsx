@@ -310,8 +310,8 @@ export default function SessionsPage() {
                       className={`card ${session.isCurrent ? "border-primary" : ""}`}
                     >
                       <div className="card-body">
-                        <div className="d-flex justify-content-between align-items-start">
-                          <div className="flex-grow-1">
+                        <div className="d-flex justify-content-between align-items-start flex-wrap gap-2">
+                          <div className="flex-grow-1" style={{ minWidth: 0 }}>
                             <div className="d-flex align-items-center mb-2">
                               <span
                                 className="me-2"
@@ -364,7 +364,7 @@ export default function SessionsPage() {
                           </div>
 
                           <button
-                            className={`btn btn-sm ${session.isCurrent ? "btn-outline-danger" : "btn-outline-secondary"} ms-3`}
+                            className={`btn btn-sm ${session.isCurrent ? "btn-outline-danger" : "btn-outline-secondary"} flex-shrink-0`}
                             onClick={() =>
                               promptRevokeSession(session.id, session.isCurrent)
                             }

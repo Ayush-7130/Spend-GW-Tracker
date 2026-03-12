@@ -1,5 +1,5 @@
 /* ==========================================================================
-   PROFESSIONAL THEME SYSTEM - Light & Dark Mode
+   PROFESSIONAL BENTO THEME SYSTEM - Light & Dark Mode (Static & Flat)
    ========================================================================== */
 
 :root {
@@ -11,20 +11,19 @@
     "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New",
     monospace;
 
-  /* Border Radius */
+  /* Border Radius - Tighter for the Bento look */
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
 
-  /* Shadows */
+  /* Shadows - Flatter and more subtle */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
   --shadow-lg:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-xl:
-    0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 
   /* Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -43,91 +42,73 @@
 }
 
 /* ==========================================================================
-   LIGHT MODE THEME - Beautiful Purple Palette
+   LIGHT MODE THEME - Crisp Slate & Indigo
    ========================================================================== */
+
 [data-theme="light"],
 :root {
-  /* Background System - Purple Palette */
-  --bg-primary: #f5efff;
-  --bg-primary-gradient: linear-gradient(135deg, #f5efff 0%, #e5d9f2 100%);
+  --bg-primary: #f1f5f9;
+  --bg-primary-gradient: #f1f5f9;
   --bg-secondary: #ffffff;
-  --bg-tertiary: #e5d9f2;
-  --bg-hover: #e5d9f2;
-  --bg-active: #cdc1ff;
-
-  /* Text Colors - Purple Theme */
-  --text-primary: #2d1b69;
-  --text-secondary: #4c3d8b;
-  --text-tertiary: #6b5b95;
-  --text-inverse: #ffffff;
-  --text-placeholder: #9b8bb8;
-
-  /* Border Colors - Purple Tones */
-  --border-primary: #cdc1ff;
-  --border-secondary: #e5d9f2;
-  --border-tertiary: #f5efff;
-
-  /* Navbar - Elegant Purple */
-  --navbar-bg: #ffffff;
-  --navbar-text: #2d1b69;
-  --navbar-text-hover: #a294f9;
-  --navbar-accent: #a294f9;
-  --navbar-hover-bg: rgba(162, 148, 249, 0.1);
-  --navbar-shadow:
-    0 1px 3px rgba(162, 148, 249, 0.15), 0 1px 2px rgba(205, 193, 255, 0.1);
-  --navbar-mobile-user-bg: rgba(162, 148, 249, 0.15);
-  --navbar-mobile-user-border: #cdc1ff;
-
-  /* Cards - Purple Gradient & Shadow */
+  --bg-tertiary: #e2e8f0;
+  --bg-hover: #f8fafc;
+  --bg-active: #e2e8f0;
+  /* --- CARDS ---
+     Using your white/lavender card gradient for depth.
+     ------------------------------------------------------------- */
   --card-bg: #ffffff;
   --card-bg-gradient: linear-gradient(135deg, #ffffff 0%, #f5efff 100%);
-  --card-border: #e5d9f2;
-  --card-shadow: 0 1px 3px rgba(162, 148, 249, 0.1);
-  --card-shadow-hover:
-    0 4px 6px -1px rgba(162, 148, 249, 0.15),
-    0 2px 4px -1px rgba(205, 193, 255, 0.1);
+  /* --- CARDS --- */
+  --card-bg: #ffffff;
+  --card-bg-gradient: #ffffff;
+  --card-border: #e2e8f0;
+  --card-shadow: var(--shadow-md);
+  --card-shadow-hover: var(--shadow-lg);
 
-  /* Primary Buttons - Purple Gradient */
-  --btn-primary-bg: #a294f9;
-  --btn-primary-bg-gradient: linear-gradient(135deg, #a294f9 0%, #cdc1ff 100%);
+  /* --- PRIMARY ACCENTS (Indigo) --- */
+  --btn-primary-bg: #4f46e5;
+  --btn-primary-bg-gradient: #4f46e5;
   --btn-primary-text: #ffffff;
-  --btn-primary-hover: #8b7bdb;
-  --btn-primary-active: #7a6bcf;
-  --btn-primary-shadow: 0 1px 2px rgba(162, 148, 249, 0.3);
+  --btn-primary-hover: #4338ca;
+  --btn-primary-active: #3730a3;
+  --btn-primary-shadow: 0 1px 2px rgba(79, 70, 229, 0.2);
 
-  /* Secondary Buttons - Light Purple Gradient */
-  --btn-secondary-bg: #f5efff;
-  --btn-secondary-bg-gradient: linear-gradient(
-    135deg,
-    #f5efff 0%,
-    #e5d9f2 100%
-  );
-  --btn-secondary-text: #4c3d8b;
-  --btn-secondary-hover: #e5d9f2;
-  --btn-secondary-active: #cdc1ff;
-  --btn-secondary-border: #cdc1ff;
+  /* --- SECONDARY ACCENTS --- */
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-bg-gradient: #ffffff;
+  --btn-secondary-text: #0f172a;
+  --btn-secondary-hover: #f8fafc;
+  --btn-secondary-active: #f1f5f9;
+  --btn-secondary-border: #e2e8f0;
 
-  /* Tables - Purple Themed */
-  --table-bg: #ffffff;
-  --table-header-bg: #f5efff;
-  --table-header-text: #2d1b69;
-  --table-border: #e5d9f2;
-  --table-row-hover: #f5efff;
-  --table-row-even: #fefcff;
+  /* --- TEXT SYSTEM --- */
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-tertiary: #94a3b8;
+  --text-inverse: #ffffff;
+  --text-placeholder: #cbd5e1;
 
-  /* Form Elements - Purple Theme */
-  --input-bg: #ffffff;
-  --input-border: #e5d9f2;
-  --input-border-focus: #a294f9;
-  --input-text: #2d1b69;
-  --input-placeholder: #9b8bb8;
-  --input-shadow-focus: 0 0 0 3px rgba(162, 148, 249, 0.15);
+  /* --- BORDER COLORS --- */
+  --border-primary: #e2e8f0;
+  --border-secondary: #cbd5e1;
+  --border-tertiary: #f1f5f9;
 
-  /* Notifications - Purple Themed Status Colors */
-  --notification-success-bg: #f5efff;
-  --notification-success-text: #2d1b69;
-  --notification-success-border: #a294f9;
-  --notification-success-icon: #a294f9;
+  /* --- TABLE/FORM SYSTEM --- */
+  --table-header-bg: #f8fafc;
+  --table-header-text: #475569;
+  --table-border: #e2e8f0;
+  --table-row-hover: #f8fafc;
+  --input-border-focus: #4f46e5;
+  --input-shadow-focus: 0 0 0 3px rgba(79, 70, 229, 0.15);
+
+  /* --- NOTIFICATIONS & STATUS --- */
+  --notification-success-bg: #ecfdf5;
+  --notification-success-text: #065f46;
+  --notification-success-border: #10b981;
+  --notification-success-icon: #10b981;
+
+  --status-success: #10b981;
+  --icon-accent: #4f46e5;
 
   --notification-error-bg: #fef2f2;
   --notification-error-text: #991b1b;
@@ -139,218 +120,232 @@
   --notification-warning-border: #f59e0b;
   --notification-warning-icon: #d97706;
 
-  --notification-info-bg: #f5efff;
-  --notification-info-text: #2d1b69;
-  --notification-info-border: #a294f9;
-  --notification-info-icon: #a294f9;
+  /* --- CHART COLORS --- */
+  --chart-primary: #4f46e5;
+  --chart-grid: #e2e8f0;
 
-  /* Status Colors - Purple Accent for Light Mode */
-  --status-success: #a294f9;
+  /* --- NAVBAR SYSTEM --- */
+  --navbar-bg: #ffffff;
+  --navbar-text: #0f172a;
+  --navbar-text-hover: #4f46e5;
+  --navbar-shadow: var(--shadow-sm);
+  --navbar-accent: #4f46e5;
+  --navbar-hover-bg: #f8fafc;
+  --navbar-mobile-user-bg: #f1f5f9;
+  --navbar-mobile-user-border: #e2e8f0;
+
+  /* --- STATUS COLORS --- */
   --status-error: #ef4444;
   --status-warning: #f59e0b;
+  --status-info: #0ea5e9;
 
-  /* Overlay & Backdrop Colors */
-  --overlay-light: rgba(0, 0, 0, 0.1);
-  --overlay-medium: rgba(0, 0, 0, 0.15);
-  --overlay-dark: rgba(0, 0, 0, 0.5);
-  --backdrop-modal: rgba(0, 0, 0, 0.5);
-  --status-info: #a294f9;
+  /* --- TABLE EXTENDED --- */
+  --table-bg: #ffffff;
+  --table-row-even: #f8fafc;
+  --table-row-stripe: #f8fafc;
 
-  /* Chart Colors - Purple Theme */
-  --chart-primary: #a294f9;
-  --chart-secondary: #22c55e;
-  --chart-tertiary: #f59e0b;
-  --chart-quaternary: #ef4444;
-  --chart-grid: #e5d9f2;
-  --chart-text: #6b5b95;
+  /* --- INPUT SYSTEM --- */
+  --input-bg: #ffffff;
+  --input-border: #cbd5e1;
+  --input-text: #0f172a;
+  --input-placeholder: #94a3b8;
 
-  /* Icon Colors - Light Mode */
-  --icon-primary: #2d1b69;
-  --icon-secondary: #4c3d8b;
-  --icon-accent: #a294f9;
-  --icon-success: #a294f9;
-  --icon-error: #ef4444;
-  --icon-warning: #f59e0b;
+  /* --- ICON SYSTEM --- */
+  --icon-primary: #64748b;
 
-  /* Notification Panel - Light Mode */
-  --notification-panel-bg: #ffffff;
-  --notification-panel-border: #e5d9f2;
-  --notification-panel-shadow:
-    0 10px 15px -3px rgba(162, 148, 249, 0.1),
-    0 4px 6px -2px rgba(205, 193, 255, 0.08);
-  --notification-panel-header-bg: #f5efff;
-  --notification-panel-header-border: #e5d9f2;
-  --notification-panel-text: #2d1b69;
-  --notification-panel-text-secondary: #6b5b95;
-  --notification-panel-item-hover: #f5efff;
-  --notification-panel-unread-bg: rgba(162, 148, 249, 0.08);
+  /* --- NOTIFICATION: INFO --- */
+  --notification-info-bg: #f0f9ff;
+  --notification-info-text: #0369a1;
+  --notification-info-border: #0ea5e9;
+  --notification-info-icon: #0ea5e9;
+
+  /* --- FOCUS --- */
+  --border-focus: #4f46e5;
+
+  /* --- NOTIFICATION BELL --- */
   --notification-bell-bg: transparent;
-  --notification-bell-border: #e5d9f2;
-  --notification-bell-hover: #f5efff;
-  --notification-bell-active: #e5d9f2;
+  --notification-bell-hover: #f1f5f9;
+  --notification-bell-active: #e2e8f0;
+  --notification-bell-border: #e2e8f0;
+
+  /* --- NOTIFICATION PANEL --- */
+  --notification-panel-bg: #ffffff;
+  --notification-panel-border: #e2e8f0;
+  --notification-panel-shadow: var(--shadow-lg);
+  --notification-panel-text: #0f172a;
+  --notification-panel-text-secondary: #64748b;
+  --notification-panel-header-bg: #f8fafc;
+  --notification-panel-header-border: #e2e8f0;
+  --notification-panel-item-hover: #f8fafc;
+  --notification-panel-unread-bg: #eff6ff;
+
+  /* --- OVERLAY --- */
+  --overlay-light: rgba(15, 23, 42, 0.4);
+
+  /* --- ALIASES --- */
+  --text-muted: #64748b;
+  --input-disabled-bg: #f1f5f9;
 }
 
 /* ==========================================================================
-   DARK MODE THEME - Professional & Modern
+   DARK MODE THEME - Ultra Dark & Bright Indigo
    ========================================================================== */
 [data-theme="dark"] {
-  /* Background System */
-  --bg-primary: #0f172a;
-  --bg-primary-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  --bg-secondary: #1e293b;
-  --bg-tertiary: #334155;
-  --bg-hover: #334155;
-  --bg-active: #475569;
+  /* --- BACKGROUND SYSTEM --- */
+  --bg-primary: #030712;
+  --bg-primary-gradient: #030712;
+  --bg-secondary: #0f172a;
+  --bg-tertiary: #1e293b;
+  --bg-hover: #1e293b;
+  --bg-active: #334155;
 
-  /* Text Colors */
-  --text-primary: #e2e8f0;
-  --text-secondary: #cbd5e1;
-  --text-tertiary: #94a3b8;
-  --text-inverse: #0f172a;
-  --text-placeholder: #64748b;
+  /* --- TEXT SYSTEM --- */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  --text-inverse: #030712;
+  --text-placeholder: #475569;
+  /* --- CARDS & BORDERS (Flat Design) --- */
+  --card-bg: #0f172a;
+  --card-bg-gradient: #0f172a;
+  --card-border: #1e293b;
+  --card-shadow: none;
+  --card-shadow-hover: none;
 
-  /* Border Colors */
-  --border-primary: #374151;
-  --border-secondary: #4b5563;
-  --border-tertiary: #334155;
-
-  /* Navbar - Professional Dark with Light Icons */
-  --navbar-bg: #1e293b;
-  --navbar-text: #e2e8f0;
-  --navbar-text-hover: #ffffff;
-  --navbar-accent: #ffffff;
-  --navbar-hover-bg: rgba(255, 255, 255, 0.1);
-  --navbar-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
-  --navbar-mobile-user-bg: rgba(0, 0, 0, 0.4);
-  --navbar-mobile-user-border: #374151;
-
-  /* Cards - Subtle Gradient & Glow */
-  --card-bg: #1e293b;
-  --card-bg-gradient: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-  --card-border: #374151;
-  --card-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
-  --card-shadow-hover:
-    0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2),
-    0 0 0 1px rgba(59, 130, 246, 0.1);
-
-  /* Primary Buttons - Blue Gradient */
-  --btn-primary-bg: #3b82f6;
-  --btn-primary-bg-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  /* --- PRIMARY ACCENTS (Bright Indigo) --- */
+  --btn-primary-bg: #6366f1;
+  --btn-primary-bg-gradient: #6366f1;
   --btn-primary-text: #ffffff;
-  --btn-primary-hover: #1d4ed8;
-  --btn-primary-active: #1e40af;
-  --btn-primary-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+  --btn-primary-hover: #818cf8;
+  --btn-primary-active: #4f46e5;
+  --btn-primary-shadow: none;
 
-  /* Secondary Buttons - Gray Gradient */
-  --btn-secondary-bg: #374151;
-  --btn-secondary-bg-gradient: linear-gradient(
-    135deg,
-    #374151 0%,
-    #475569 100%
-  );
-  --btn-secondary-text: #e2e8f0;
-  --btn-secondary-hover: #4b5563;
-  --btn-secondary-active: #6b7280;
-  --btn-secondary-border: #4b5563;
+  /* --- SECONDARY ACCENTS --- */
+  --btn-secondary-bg: #1e293b;
+  --btn-secondary-bg-gradient: #1e293b;
+  --btn-secondary-text: #f8fafc;
+  --btn-secondary-hover: #334155;
+  --btn-secondary-active: #475569;
+  --btn-secondary-border: #334155;
 
-  /* Tables - Professional Dark */
-  --table-bg: #1e293b;
-  --table-header-bg: #1f2937;
-  --table-header-text: #e2e8f0;
-  --table-border: #374151;
-  --table-row-hover: #334155;
-  --table-row-even: #1a202c;
+  /* --- BORDER COLORS --- */
+  --border-primary: #1e293b;
+  --border-secondary: #334155;
+  --border-tertiary: #0f172a;
 
-  /* Form Elements */
-  --input-bg: #1f2937;
-  --input-border: #4b5563;
-  --input-border-focus: #3b82f6;
-  --input-text: #e2e8f0;
-  --input-placeholder: #6b7280;
-  --input-shadow-focus: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  /* --- TABLE/FORM SYSTEM --- */
+  --table-header-bg: #030712;
+  --table-header-text: #94a3b8;
+  --table-border: #1e293b;
+  --table-row-hover: #1e293b;
+  --input-border-focus: #6366f1;
+  --input-shadow-focus: 0 0 0 3px rgba(99, 102, 241, 0.15);
 
-  /* Notifications - Professional Dark Status Colors */
-  --notification-success-bg: #064e3b;
-  --notification-success-text: #d1fae5;
-  --notification-success-border: #059669;
+  /* --- NOTIFICATIONS & STATUS --- */
+  --notification-success-bg: rgba(16, 185, 129, 0.15);
+  --notification-success-text: #34d399;
+  --notification-success-border: #10b981;
   --notification-success-icon: #10b981;
 
-  --notification-error-bg: #7f1d1d;
-  --notification-error-text: #fecaca;
-  --notification-error-border: #dc2626;
-  --notification-error-icon: #ef4444;
-
-  --notification-warning-bg: #78350f;
-  --notification-warning-text: #fde68a;
-  --notification-warning-border: #d97706;
-  --notification-warning-icon: #f59e0b;
-
-  --notification-info-bg: #1e3a8a;
-  --notification-info-text: #bfdbfe;
-  --notification-info-border: #2563eb;
-  --notification-info-icon: #3b82f6;
-
-  /* Status Colors */
   --status-success: #10b981;
-  --status-error: #ef4444;
-  --status-warning: #f59e0b;
-  --status-info: #3b82f6;
+  --icon-accent: #6366f1;
 
-  /* Overlay & Backdrop Colors */
-  --overlay-light: rgba(255, 255, 255, 0.1);
-  --overlay-medium: rgba(255, 255, 255, 0.15);
-  --overlay-dark: rgba(0, 0, 0, 0.7);
-  --backdrop-modal: rgba(0, 0, 0, 0.8);
-
-  /* Chart Colors */
-  --chart-primary: #3b82f6;
-  --chart-secondary: #10b981;
-  --chart-tertiary: #f59e0b;
-  --chart-quaternary: #ef4444;
-  --chart-grid: #374151;
+  /* --- CHART COLORS --- */
+  --chart-primary: #6366f1;
+  --chart-grid: #1e293b;
   --chart-text: #94a3b8;
 
-  /* Icon Colors - Dark Mode (Light/White Icons) */
-  --icon-primary: #e2e8f0;
-  --icon-secondary: #cbd5e1;
-  --icon-accent: #ffffff;
-  --icon-success: #10b981;
-  --icon-error: #ef4444;
-  --icon-warning: #f59e0b;
+  /* --- NAVBAR SYSTEM --- */
+  --navbar-bg: #0f172a;
+  --navbar-text: #f8fafc;
+  --navbar-text-hover: #818cf8;
+  --navbar-shadow: none;
+  --navbar-accent: #6366f1;
+  --navbar-hover-bg: #1e293b;
+  --navbar-mobile-user-bg: #030712;
+  --navbar-mobile-user-border: #1e293b;
 
-  /* Notification Panel - Dark Mode */
-  --notification-panel-bg: #1e293b;
-  --notification-panel-border: #374151;
-  --notification-panel-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.25), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
-  --notification-panel-header-bg: #1f2937;
-  --notification-panel-header-border: #374151;
-  --notification-panel-text: #e2e8f0;
-  --notification-panel-text-secondary: #94a3b8;
-  --notification-panel-item-hover: #334155;
-  --notification-panel-unread-bg: rgba(59, 130, 246, 0.1);
+  /* --- STATUS COLORS --- */
+  --status-error: #ef4444;
+  --status-warning: #f59e0b;
+  --status-info: #0ea5e9;
+
+  /* --- TABLE EXTENDED --- */
+  --table-bg: #0f172a;
+  --table-row-even: #030712;
+  --table-row-stripe: #030712;
+
+  /* --- INPUT SYSTEM --- */
+  --input-bg: #1e293b;
+  --input-border: rgba(255, 255, 255, 0.12);
+  --input-text: #e2e8f0;
+  --input-placeholder: #64748b;
+
+  /* --- ICON SYSTEM --- */
+  --icon-primary: #94a3b8;
+
+  /* --- NOTIFICATION: INFO --- */
+  --notification-info-bg: rgba(14, 165, 233, 0.15);
+  --notification-info-text: #38bdf8;
+  --notification-info-border: #0ea5e9;
+  --notification-info-icon: #0ea5e9;
+
+  /* --- NOTIFICATION: ERROR --- */
+  --notification-error-bg: rgba(239, 68, 68, 0.15);
+  --notification-error-text: #f87171;
+  --notification-error-border: #ef4444;
+  --notification-error-icon: #ef4444;
+
+  /* --- NOTIFICATION: WARNING --- */
+  --notification-warning-bg: rgba(245, 158, 11, 0.15);
+  --notification-warning-text: #fbbf24;
+  --notification-warning-border: #f59e0b;
+  --notification-warning-icon: #f59e0b;
+
+  /* --- FOCUS --- */
+  --border-focus: #6366f1;
+
+  /* --- NOTIFICATION BELL --- */
   --notification-bell-bg: transparent;
-  --notification-bell-border: #4b5563;
-  --notification-bell-hover: #374151;
-  --notification-bell-active: #4b5563;
-}
+  --notification-bell-hover: #1e293b;
+  --notification-bell-active: #334155;
+  --notification-bell-border: #334155;
 
+  /* --- NOTIFICATION PANEL --- */
+  --notification-panel-bg: #0f172a;
+  --notification-panel-border: #1e293b;
+  --notification-panel-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  --notification-panel-text: #f8fafc;
+  --notification-panel-text-secondary: #94a3b8;
+  --notification-panel-header-bg: #030712;
+  --notification-panel-header-border: #1e293b;
+  --notification-panel-item-hover: #1e293b;
+  --notification-panel-unread-bg: rgba(99, 102, 241, 0.1);
+
+  /* --- OVERLAY --- */
+  --overlay-light: rgba(3, 7, 18, 0.7);
+
+  /* --- ALIASES --- */
+  --text-muted: #64748b;
+  --input-disabled-bg: #1e293b;
+
+  /* --- ANALYTICS STAT CARDS (Flat) --- */
+}
 /* ==========================================================================
    BASE APPLICATION STYLES
    ========================================================================== */
 
-/* Root Document */
 html {
   scroll-behavior: smooth;
 }
 
-/* Body with Professional Gradient Background */
 body {
   font-family: var(--font-family-primary);
-  background: var(--bg-primary-gradient);
+  background: var(--bg-primary);
   color: var(--text-primary);
-  transition: all var(--transition-normal);
+  transition:
+    background-color var(--transition-normal),
+    color var(--transition-normal);
   min-height: 100vh;
   margin: 0;
   -webkit-font-smoothing: antialiased;
@@ -380,8 +375,7 @@ body {
 
 /* Firefox Scrollbar */
 * {
-  scrollbar-width: thin;
-  scrollbar-color: var(--border-secondary) var(--bg-tertiary);
+  scrollbar-width: none;
 }
 
 /* ==========================================================================
@@ -433,7 +427,7 @@ small,
   background: var(--navbar-bg) !important;
   box-shadow: var(--navbar-shadow);
   border-bottom: 1px solid var(--border-primary);
-  transition: all var(--transition-normal);
+  transition: background-color var(--transition-normal);
 }
 
 .navbar-brand {
@@ -477,9 +471,9 @@ small,
   border-radius: 1px;
 }
 
-/* Professional Card Styling */
+/* Cards (Bento Style) */
 .card {
-  background: var(--card-bg-gradient);
+  background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--card-shadow);
@@ -489,15 +483,18 @@ small,
 
 .card:hover {
   box-shadow: var(--card-shadow-hover);
-  transform: translateY(-2px);
 }
 
 .card-header {
-  background: transparent;
+  background: var(--table-header-bg);
   border-bottom: 1px solid var(--border-primary);
-  padding: 1.5rem;
+  padding: 1rem 1.5rem;
   font-weight: 600;
   color: var(--text-primary);
+}
+
+[data-theme="dark"] .card-header {
+  background: var(--bg-tertiary);
 }
 
 .card-body {
@@ -520,7 +517,7 @@ small,
 }
 
 .btn-primary {
-  background: var(--btn-primary-bg-gradient);
+  background: var(--btn-primary-bg);
   color: var(--btn-primary-text);
   box-shadow: var(--btn-primary-shadow);
 }
@@ -528,12 +525,10 @@ small,
 .btn-primary:hover {
   background: var(--btn-primary-hover);
   color: var(--btn-primary-text);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
 }
 
 .btn-secondary {
-  background: var(--btn-secondary-bg-gradient);
+  background: var(--btn-secondary-bg);
   color: var(--btn-secondary-text);
   border: 1px solid var(--btn-secondary-border);
 }
@@ -541,7 +536,6 @@ small,
 .btn-secondary:hover {
   background: var(--btn-secondary-hover);
   color: var(--btn-secondary-text);
-  transform: translateY(-1px);
 }
 
 .btn-outline-primary {
@@ -558,7 +552,6 @@ small,
   color: var(--btn-primary-text) !important;
   border-color: var(--btn-primary-bg) !important;
   box-shadow: var(--btn-primary-shadow) !important;
-  transform: translateY(-1px);
 }
 
 .btn-sm {
@@ -576,7 +569,7 @@ small,
   background: var(--table-bg);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: var(--card-shadow);
+  border: 1px solid var(--table-border);
   color: var(--text-primary);
 }
 
@@ -723,7 +716,7 @@ small,
 
 /* Theme Toggle Button Professional Styling */
 .theme-toggle-btn {
-  background: transparent;
+  background: var(--bg-secondary);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-md);
   padding: 0.5rem;
@@ -741,7 +734,6 @@ small,
   background: var(--bg-hover);
   color: var(--navbar-accent);
   border-color: var(--navbar-accent);
-  transform: scale(1.05);
 }
 
 /* Professional Loading States */
@@ -888,7 +880,7 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(162, 148, 249, 0.15);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
 }
 
 /* Selection Styling */
@@ -920,7 +912,6 @@ select:focus {
 
 .card-base:hover {
   box-shadow: var(--card-hover-shadow);
-  transform: translateY(-2px);
 }
 
 /* Buttons */
@@ -937,7 +928,6 @@ select:focus {
 
 .button-primary:hover {
   background: var(--button-primary-hover);
-  transform: translateY(-1px);
 }
 
 .button-secondary {
@@ -1126,6 +1116,185 @@ select:focus {
   background: var(--bg-hover);
 }
 
+/* ===========================================================================
+   SEMANTIC BUTTON OVERRIDES - Theme-aware success/warning/danger/info
+   =========================================================================== */
+
+/* Success buttons - use a true green that works in both themes */
+.btn-success {
+  background: #16a34a !important;
+  border-color: #16a34a !important;
+  color: #ffffff !important;
+}
+
+.btn-success:hover,
+.btn-success:focus {
+  background: #15803d !important;
+  border-color: #15803d !important;
+  color: #ffffff !important;
+}
+
+.btn-outline-success {
+  background: transparent !important;
+  color: #16a34a !important;
+  border-color: #16a34a !important;
+}
+
+.btn-outline-success:hover,
+.btn-outline-success:focus {
+  background: #16a34a !important;
+  color: #ffffff !important;
+  border-color: #16a34a !important;
+}
+
+/* Warning buttons */
+.btn-warning {
+  background: #d97706 !important;
+  border-color: #d97706 !important;
+  color: #ffffff !important;
+}
+
+.btn-warning:hover,
+.btn-warning:focus {
+  background: #b45309 !important;
+  border-color: #b45309 !important;
+  color: #ffffff !important;
+}
+
+.btn-outline-warning {
+  background: transparent !important;
+  color: #d97706 !important;
+  border-color: #d97706 !important;
+}
+
+.btn-outline-warning:hover,
+.btn-outline-warning:focus {
+  background: #d97706 !important;
+  color: #ffffff !important;
+  border-color: #d97706 !important;
+}
+
+/* Danger buttons — always red for destructive actions */
+.btn-danger {
+  background: #dc2626 !important;
+  border-color: #dc2626 !important;
+  color: #ffffff !important;
+}
+
+.btn-danger:hover,
+.btn-danger:focus {
+  background: #b91c1c !important;
+  border-color: #b91c1c !important;
+  color: #ffffff !important;
+}
+
+.btn-outline-danger {
+  background: transparent !important;
+  color: #dc2626 !important;
+  border-color: #dc2626 !important;
+}
+
+.btn-outline-danger:hover,
+.btn-outline-danger:focus {
+  background: #dc2626 !important;
+  color: #ffffff !important;
+  border-color: #dc2626 !important;
+}
+
+/* Info buttons */
+.btn-info {
+  background: var(--status-info) !important;
+  border-color: var(--status-info) !important;
+  color: #ffffff !important;
+}
+
+.btn-info:hover,
+.btn-info:focus {
+  background: #2563eb !important;
+  border-color: #2563eb !important;
+  color: #ffffff !important;
+}
+
+.btn-outline-info {
+  background: transparent !important;
+  color: var(--status-info) !important;
+  border-color: var(--status-info) !important;
+}
+
+.btn-outline-info:hover,
+.btn-outline-info:focus {
+  background: var(--status-info) !important;
+  color: #ffffff !important;
+  border-color: var(--status-info) !important;
+}
+
+/* ===========================================================================
+   TEXT COLOR SEMANTIC OVERRIDES - Ensure readability in both themes
+   =========================================================================== */
+
+.text-success {
+  color: #16a34a !important;
+}
+
+.text-danger {
+  color: #dc2626 !important;
+}
+
+.text-warning {
+  color: #d97706 !important;
+}
+
+.text-info {
+  color: var(--status-info) !important;
+}
+
+[data-theme="dark"] .text-success {
+  color: #4ade80 !important;
+}
+
+[data-theme="dark"] .text-danger {
+  color: #f87171 !important;
+}
+
+[data-theme="dark"] .text-warning {
+  color: #fbbf24 !important;
+}
+
+[data-theme="dark"] .text-info {
+  color: #60a5fa !important;
+}
+
+/* Alert class readability in dark mode */
+[data-theme="dark"] .alert-success {
+  background: rgba(22, 163, 74, 0.15) !important;
+  color: #4ade80 !important;
+  border-color: #16a34a !important;
+}
+
+[data-theme="dark"] .alert-danger {
+  background: rgba(220, 38, 38, 0.15) !important;
+  color: #f87171 !important;
+  border-color: #dc2626 !important;
+}
+
+[data-theme="dark"] .alert-warning {
+  background: rgba(217, 119, 6, 0.15) !important;
+  color: #fbbf24 !important;
+  border-color: #d97706 !important;
+}
+
+[data-theme="dark"] .alert-info {
+  background: rgba(59, 130, 246, 0.15) !important;
+  color: #60a5fa !important;
+  border-color: #3b82f6 !important;
+}
+
+/* Ensure btn-close is visible in all alert types in dark mode */
+[data-theme="dark"] .alert .btn-close {
+  filter: invert(1) !important;
+  opacity: 0.8;
+}
+
 /* Ensure input group buttons have proper borders */
 .input-group .btn {
   border-color: var(--border-primary) !important;
@@ -1190,10 +1359,10 @@ input[type="password"]::-ms-clear {
 .btn.btn-primary.dropdown-toggle:active,
 .btn.btn-primary.dropdown-toggle.active,
 .btn.btn-primary.dropdown-toggle.show {
-  background: var(--btn-primary-bg-gradient) !important;
+  background: var(--btn-primary-bg) !important;
   color: var(--btn-primary-text) !important;
   border-color: var(--btn-primary-bg) !important;
-  box-shadow: var(--btn-primary-shadow) !important;
+  box-shadow: none !important;
   transition: none !important;
   transform: none !important;
   outline: none !important;
@@ -1210,10 +1379,10 @@ input[type="password"]::-ms-clear {
 [data-theme="light"] .btn.btn-primary.dropdown-toggle:active,
 [data-theme="light"] .btn.btn-primary.dropdown-toggle.active,
 [data-theme="light"] .btn.btn-primary.dropdown-toggle.show {
-  background: var(--btn-primary-bg-gradient) !important;
+  background: var(--btn-primary-bg) !important;
   color: var(--btn-primary-text) !important;
   border-color: var(--btn-primary-bg) !important;
-  box-shadow: var(--btn-primary-shadow) !important;
+  box-shadow: none !important;
   transition: none !important;
   transform: none !important;
   outline: none !important;
@@ -1299,7 +1468,7 @@ input[type="password"]::-ms-clear {
 
 .date-text-input:focus {
   border-color: var(--btn-primary-bg);
-  box-shadow: 0 0 0 0.2rem rgba(162, 148, 249, 0.25);
+  box-shadow: 0 0 0 0.2rem var(--input-shadow-focus);
 }
 
 .date-text-input::placeholder {
@@ -1390,26 +1559,22 @@ input[type="password"]::-ms-clear {
 }
 
 .empty-state-btn-primary {
-  background: var(--btn-primary-bg-gradient);
+  background: var(--btn-primary-bg);
   color: var(--btn-primary-text);
-  box-shadow: var(--btn-primary-shadow);
 }
 
 .empty-state-btn-primary:hover {
   background: var(--btn-primary-hover);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
 }
 
 .empty-state-btn-secondary {
-  background: var(--btn-secondary-bg-gradient);
+  background: var(--btn-secondary-bg);
   color: var(--btn-secondary-text);
   border: 1px solid var(--btn-secondary-border);
 }
 
 .empty-state-btn-secondary:hover {
   background: var(--btn-secondary-hover);
-  transform: translateY(-1px);
 }
 
 .empty-state-btn-outline {
@@ -1438,4 +1603,228 @@ input[type="password"]::-ms-clear {
   width: 100%;
   margin: 0 auto;
   text-align: center;
+}
+
+/* ==========================================================================
+   BOOTSTRAP UTILITY CLASS OVERRIDES - Theme-aware bg-* classes
+   ========================================================================== */
+
+/* Fix bg-warning + text-white contrast issue (yellow BG + white text fails WCAG) */
+.bg-warning.text-white,
+.card.bg-warning .text-white,
+.card.bg-warning *:not(.opacity-75) {
+  color: #1a1a1a !important;
+}
+
+.card.bg-warning .opacity-75 {
+  color: #1a1a1a !important;
+  opacity: 0.75;
+}
+
+/* Dark mode: Override Bootstrap bg-* utility classes */
+[data-theme="dark"] .card.bg-primary {
+  background-color: #4f46e5 !important;
+  border-color: #4338ca !important;
+}
+
+[data-theme="dark"] .card.bg-info {
+  background-color: #0ea5e9 !important;
+  border-color: #0284c7 !important;
+}
+
+[data-theme="dark"] .card.bg-success {
+  background-color: #10b981 !important;
+  border-color: #059669 !important;
+}
+
+[data-theme="dark"] .card.bg-warning {
+  background-color: #f59e0b !important;
+  border-color: #d97706 !important;
+}
+
+[data-theme="dark"] .card.bg-danger {
+  background-color: #ef4444 !important;
+  border-color: #dc2626 !important;
+}
+
+/* Ensure text inside themed cards is always white in dark mode */
+[data-theme="dark"] .card.bg-primary *,
+[data-theme="dark"] .card.bg-info *,
+[data-theme="dark"] .card.bg-success *,
+[data-theme="dark"] .card.bg-warning *,
+[data-theme="dark"] .card.bg-danger * {
+  color: #ffffff !important;
+}
+
+/* Avatar/Badge Color Circle Overrides */
+.avatar-xs.bg-danger {
+  background-color: #ef4444 !important;
+}
+.avatar-xs.bg-success {
+  background-color: #10b981 !important;
+}
+.avatar-xs.bg-primary {
+  background-color: var(--btn-primary-bg) !important;
+}
+.avatar-xs.bg-info {
+  background-color: var(--status-info) !important;
+}
+
+/* ==========================================================================
+   GLOBAL VISIBILITY FIXES - Flat dark mode cards
+   ========================================================================== */
+
+/* Dark mode cards — flat, no glassmorphism */
+[data-theme="dark"]
+  .card:not(.bg-primary):not(.bg-info):not(.bg-success):not(.bg-warning):not(
+    .bg-danger
+  ) {
+  background: var(--card-bg) !important;
+}
+
+/* Dropdown and modal in dark mode — fully opaque for readability */
+[data-theme="dark"] .dropdown-menu,
+[data-theme="dark"] .modal-content,
+[data-theme="dark"] .modal-header,
+[data-theme="dark"] .modal-body,
+[data-theme="dark"] .modal-footer {
+  background: var(--bg-secondary) !important;
+  border-color: var(--border-primary);
+}
+
+/* List group items in dark mode */
+[data-theme="dark"] .list-group-item {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-primary);
+  color: var(--text-primary);
+}
+
+/* Breadcrumb in dark mode */
+[data-theme="dark"] .breadcrumb-item {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .breadcrumb-item a {
+  color: var(--navbar-accent);
+}
+
+[data-theme="dark"] .breadcrumb-item.active {
+  color: var(--text-primary);
+}
+
+/* Card header bg-transparent — always use themed header bg, never truly transparent */
+.card-header.bg-transparent {
+  background: var(--table-header-bg) !important;
+  border-bottom: 1px solid var(--border-primary) !important;
+}
+
+[data-theme="dark"] .card-header.bg-transparent {
+  background: var(--bg-tertiary) !important;
+  border-bottom-color: var(--border-primary);
+}
+
+/* Ensure all card body text inherits theme color */
+.card-body,
+.card-footer,
+.card-header {
+  color: var(--text-primary);
+}
+
+/* Fix for stat cards - ensure text is visible */
+.card-body h4,
+.card-body h5,
+.card-body h6,
+.card-body p,
+.card-body small {
+  color: inherit;
+}
+
+/* ==========================================================================
+   CARD FOOTER - Consistent theme-aware background
+   ========================================================================== */
+
+.card-footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-primary) !important;
+}
+
+[data-theme="dark"] .card-footer {
+  background: var(--bg-secondary);
+}
+
+/* Remove Bootstrap's faint bg-transparent override conflicts */
+.card-footer.bg-transparent {
+  background: var(--bg-secondary) !important;
+}
+
+[data-theme="dark"] .card-footer.bg-transparent {
+  background: var(--bg-secondary) !important;
+}
+
+/* ==========================================================================
+   ANALYTICS STAT CARDS - Single unified bento card style
+   ========================================================================== */
+
+.analytics-stat-card {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border-primary) !important;
+  border-left: 3px solid var(--btn-primary-bg) !important;
+  box-shadow: var(--shadow-sm) !important;
+  transition: box-shadow var(--transition-fast) !important;
+}
+
+.analytics-stat-card:hover {
+  box-shadow: var(--shadow-md) !important;
+}
+
+/* ==========================================================================
+   ANALYTICS NAV BUTTONS - Consistent secondary outline style
+   ========================================================================== */
+
+.analytics-nav-btn {
+  background: transparent !important;
+  color: var(--text-secondary) !important;
+  border: 1px solid var(--border-primary) !important;
+  border-radius: var(--radius-md) !important;
+  font-weight: 500 !important;
+  transition: all var(--transition-fast) !important;
+}
+
+.analytics-nav-btn:hover,
+.analytics-nav-btn:focus {
+  background: var(--bg-hover) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-secondary) !important;
+}
+
+/* ==========================================================================
+   GROUP CARD - Active group header badge
+   ========================================================================== */
+
+.group-card-active-header {
+  background: var(--btn-primary-bg) !important;
+  color: #ffffff !important;
+  border-color: var(--btn-primary-bg) !important;
+  padding: 0.6rem 1rem !important;
+}
+
+.group-card-active-header * {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .group-card-active-header {
+  background: var(--btn-primary-bg) !important;
+  border-color: var(--btn-primary-bg) !important;
+}
+
+.group-card-inactive-header {
+  background: var(--bg-secondary) !important;
+  color: var(--text-secondary) !important;
+  border-color: var(--border-primary) !important;
+  padding: 0.6rem 1rem !important;
+}
+
+[data-theme="dark"] .group-card-inactive-header {
+  background: var(--bg-tertiary) !important;
+  color: var(--text-secondary) !important;
 }
