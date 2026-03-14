@@ -87,11 +87,16 @@ export async function getUserGroups(
     const client = await clientPromise;
     const db = client.db("spend-tracker");
 
-    // Query groups where user is a member
+    // Query groups where user is an ACTIVE member (not left)
     const groups = await db
       .collection("groups")
       .find({
-        "members.userId": userId,
+        members: {
+          $elemMatch: {
+            userId,
+            $or: [{ status: { $exists: false } }, { status: "active" }],
+          },
+        },
       })
       .project({
         _id: 1,

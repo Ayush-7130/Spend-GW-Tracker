@@ -47,30 +47,35 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
       case "success":
         return {
           bgClass: "alert-success",
+          bgColor: "var(--notification-success-bg)",
           icon: "bi-check-circle-fill",
           borderColor: "var(--notification-success-border)",
         };
       case "error":
         return {
           bgClass: "alert-danger",
+          bgColor: "var(--notification-error-bg)",
           icon: "bi-x-circle-fill",
           borderColor: "var(--notification-error-border)",
         };
       case "warning":
         return {
           bgClass: "alert-warning",
+          bgColor: "var(--notification-warning-bg)",
           icon: "bi-exclamation-triangle-fill",
           borderColor: "var(--notification-warning-border)",
         };
       case "info":
         return {
           bgClass: "alert-info",
+          bgColor: "var(--notification-info-bg)",
           icon: "bi-info-circle-fill",
           borderColor: "var(--notification-info-border)",
         };
       default:
         return {
           bgClass: "alert-secondary",
+          bgColor: "var(--bg-secondary)",
           icon: "bi-bell-fill",
           borderColor: "var(--border-secondary)",
         };
@@ -81,7 +86,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 
   return (
     <div
-      className={`alert ${config.bgClass} alert-dismissible d-flex align-items-start mb-3 shadow-sm notification-item ${
+      className={`alert alert-dismissible d-flex align-items-start mb-3 shadow-sm notification-item ${
         isVisible ? "slide-in" : "slide-out"
       }`}
       role="alert"
@@ -90,13 +95,15 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
       style={{
         position: "relative",
         overflow: "hidden",
+        backgroundColor: config.bgColor,
+        color: `var(--notification-${type === "error" ? "error" : type === "warning" ? "warning" : type === "info" ? "info" : "success"}-text)`,
         border: `1px solid ${config.borderColor}`,
         borderRadius: "8px",
         animation: isVisible
           ? "slideInRight 0.3s ease-out"
           : "slideOutRight 0.3s ease-in",
         wordBreak: "break-word",
-        minWidth: 0, // Allow flex item to shrink below content size
+        minWidth: 0,
       }}
     >
       <i

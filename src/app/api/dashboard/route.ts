@@ -3,6 +3,11 @@ import clientPromise from "@/lib/mongodb";
 import { withGroupAuth, GroupRequestContext } from "@/lib/api-middleware";
 import { ObjectId } from "mongodb";
 
+// groupIdSource: "request" tells withGroupAuth to read the groupId from the
+// query string (?groupId=...) rather than from the user's server-stored
+// currentGroupId. This allows the client to explicitly select which group's
+// dashboard to display, and validateGroupAccess still enforces membership.
+
 // Disable Next.js caching for this route
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -568,19 +573,46 @@ export const GET = withGroupAuth(
         })
         .toArray();
 
-      const users = group.members.map((member: any) => {
-        const userDoc = usersCollection.find(
-          (u: any) => u._id.toString() === member.userId
-        );
-        return {
-          id: member.userId,
-          name: userDoc?.name || member.userId.toString(),
-          email: userDoc?.email || "",
-          role: member.role,
-          status: member.status || "active",
-          leftAt: member.leftAt,
-        };
-      });
+      // Deduplicate by userId — a user who left and rejoined may have multiple entries
+      // in the members array (one 'left' from an older code path that pushed instead of
+      // updating in-place).  We use a Map so the 'active' entry always wins.
+      const memberMap = new Map<string, any>();
+      for (const member of group.members) {
+        const uid = member.userId?.toString?.() ?? String(member.userId);
+        const existing = memberMap.get(uid);
+        if (!existing) {
+          memberMap.set(uid, member);
+        } else {
+          // Prefer active over left; if both same status, keep the most-recent (last-in-array) entry
+          const existingActive =
+            !existing.status || existing.status === "active";
+          const currentActive = !member.status || member.status === "active";
+          if (!existingActive && currentActive) {
+            memberMap.set(uid, member); // replace left entry with active entry
+          } else if (existingActive === currentActive) {
+            memberMap.set(uid, member); // same status — keep most-recent (last in array)
+          }
+          // else: existing is active, current is left — keep existing
+        }
+      }
+
+      // Only expose ACTIVE members. Left members should not appear in user lists,
+      // expense dropdowns, or settlement calculations.
+      const users = Array.from(memberMap.values())
+        .filter((member: any) => !member.status || member.status === "active")
+        .map((member: any) => {
+          const uid = member.userId?.toString?.() ?? String(member.userId);
+          const userDoc = usersCollection.find(
+            (u: any) => u._id.toString() === uid
+          );
+          return {
+            id: uid,
+            name: userDoc?.name || uid,
+            email: userDoc?.email || "",
+            role: member.role,
+            status: member.status || "active",
+          };
+        });
 
       const dashboardData = {
         totalExpenses: Math.round(totalExpenses * 100) / 100,
@@ -617,5 +649,6 @@ export const GET = withGroupAuth(
         { status: 500 }
       );
     }
-  }
+  },
+  { groupIdSource: "request" }
 );

@@ -107,16 +107,22 @@ export const POST = withAuth(async (req: NextRequest, context) => {
       );
 
       if (isRejoin) {
+        // Use arrayFilters to target specifically the 'left' entry for this user.
+        // The positional-$ operator would update the *first* matching element which may
+        // be a stale 'active' duplicate — arrayFilters targets the correct 'left' entry.
         await groupsCollection.updateOne(
-          { _id: new ObjectId(group._id), "members.userId": user.id },
+          { _id: new ObjectId(group._id) },
           {
             $set: {
-              "members.$.status": "active",
-              "members.$.joinedAt": now,
-              "members.$.role": "member",
+              "members.$[entry].status": "active",
+              "members.$[entry].joinedAt": now,
+              "members.$[entry].role": "member",
               updatedAt: now,
             },
-            $unset: { "members.$.leftAt": "" },
+            $unset: { "members.$[entry].leftAt": "" },
+          },
+          {
+            arrayFilters: [{ "entry.userId": user.id, "entry.status": "left" }],
           }
         );
       } else {
