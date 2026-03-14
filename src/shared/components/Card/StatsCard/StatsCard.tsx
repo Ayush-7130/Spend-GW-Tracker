@@ -93,8 +93,8 @@ export default function StatsCard({
 
   const cardBody = (
     <div className={`card-body ${sizeClasses[size]}`}>
-      <div className="d-flex align-items-center justify-content-between">
-        <div>
+      <div className="d-flex align-items-start justify-content-between gap-2">
+        <div className="flex-grow-1 min-width-0">
           <h6
             className="card-title mb-2"
             style={{ color: colors.text.secondary }}
@@ -140,10 +140,10 @@ export default function StatsCard({
           )}
         </div>
         {icon && (
-          <div className="ms-3">
+          <div className="flex-shrink-0 mt-1">
             <i
               className={`${icon} fs-2`}
-              style={{ color: iconColor }}
+              style={{ color: iconColor, lineHeight: 1 }}
               aria-hidden="true"
             ></i>
           </div>

@@ -69,20 +69,17 @@ export function StatsCardSkeleton({ count = 3 }: StatsCardSkeletonProps) {
   return (
     <div className="row mb-4">
       {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className="col-md-4 mb-3">
-          <div className="card">
-            <div className="card-body">
-              <div className="d-flex align-items-center">
-                <Skeleton
-                  variant="circular"
-                  width="48px"
-                  height="48px"
-                  className="me-3 flex-shrink-0"
-                />
+        <div key={i} className="col-sm-6 col-md-4 mb-3">
+          <div className="card h-100">
+            <div className="card-body p-3">
+              <div className="d-flex align-items-start justify-content-between gap-2">
                 <div className="flex-grow-1">
-                  <Skeleton width="60%" height="14px" className="mb-2" />
-                  <Skeleton width="40%" height="24px" className="mb-1" />
-                  <Skeleton width="50%" height="12px" />
+                  <Skeleton width="65%" height="13px" className="mb-2" />
+                  <Skeleton width="45%" height="26px" className="mb-2" />
+                  <Skeleton width="55%" height="12px" />
+                </div>
+                <div className="flex-shrink-0 mt-1">
+                  <Skeleton variant="circular" width="32px" height="32px" />
                 </div>
               </div>
             </div>
@@ -544,27 +541,36 @@ export function DashboardSkeleton() {
   return (
     <div className="row">
       <div className="col-12">
-        <PageHeaderSkeleton />
+        {/* Page header with user filter dropdown on the right */}
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <div className="d-flex align-items-center gap-2">
+            <Skeleton variant="circular" width="28px" height="28px" />
+            <Skeleton width="120px" height="28px" />
+          </div>
+          <Skeleton width="130px" height="38px" borderRadius="6px" />
+        </div>
+
+        {/* Stats Cards — 3 columns md+, 2 columns sm, 1 column xs */}
         <StatsCardSkeleton count={3} />
+
+        {/* Recent Expenses + Quick Actions */}
         <div className="row mb-4">
-          {/* Recent expenses table */}
           <div className="col-md-8 mb-3 mb-md-0">
             <div className="card h-100">
-              <div className="card-header d-flex justify-content-between align-items-center">
+              <div className="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <Skeleton width="150px" height="20px" />
                 <Skeleton width="70px" height="30px" borderRadius="6px" />
               </div>
               <div className="card-body p-0">
-                <TableSkeleton
+                <TableCardSkeleton
                   rows={5}
                   columns={6}
-                  showHeader={true}
+                  actionCount={0}
                   className="border-0 shadow-none"
                 />
               </div>
             </div>
           </div>
-          {/* Quick actions */}
           <div className="col-md-4">
             <div className="card h-100">
               <div className="card-header">
@@ -581,19 +587,19 @@ export function DashboardSkeleton() {
             </div>
           </div>
         </div>
+
         {/* Settlement section */}
         <div className="row mb-4">
           <div className="col-md-8 mb-3 mb-md-0">
             <div className="card h-100">
-              <div className="card-header d-flex justify-content-between align-items-center">
+              <div className="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <Skeleton width="140px" height="20px" />
                 <Skeleton width="70px" height="30px" borderRadius="6px" />
               </div>
               <div className="card-body p-0">
-                <TableSkeleton
+                <TableCardSkeleton
                   rows={3}
                   columns={4}
-                  showHeader={true}
                   className="border-0 shadow-none"
                 />
               </div>
@@ -606,7 +612,10 @@ export function DashboardSkeleton() {
               </div>
               <div className="card-body">
                 {Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} className="d-flex justify-content-between mb-2">
+                  <div
+                    key={i}
+                    className="d-flex justify-content-between align-items-center mb-3"
+                  >
                     <Skeleton width="80px" height="14px" />
                     <Skeleton width="60px" height="14px" />
                   </div>
@@ -615,19 +624,19 @@ export function DashboardSkeleton() {
             </div>
           </div>
         </div>
-        {/* Recent Settlements full-width card */}
+
+        {/* Recent Settlements full-width */}
         <div className="row mb-4">
           <div className="col-12">
-            <div className="card h-100">
-              <div className="card-header d-flex justify-content-between align-items-center">
+            <div className="card">
+              <div className="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <Skeleton width="160px" height="20px" />
                 <Skeleton width="150px" height="30px" borderRadius="6px" />
               </div>
               <div className="card-body p-0">
-                <TableSkeleton
+                <TableCardSkeleton
                   rows={3}
                   columns={5}
-                  showHeader={true}
                   className="border-0 shadow-none"
                 />
               </div>

@@ -160,7 +160,7 @@ export default function Home() {
     }
   };
 
-  if (loading) {
+  if (loading && !dashboardData) {
     return (
       <MainLayout>
         <DashboardSkeleton />
@@ -269,6 +269,7 @@ export default function Home() {
                 subtitle={`${dashboardData.totalExpenseCount} transactions`}
                 icon="bi bi-currency-rupee"
                 variant="primary"
+                loading={loading}
                 onClick={() => router.push("/expenses")}
               />
             </div>
@@ -280,6 +281,7 @@ export default function Home() {
                 subtitle={`${dashboardData.thisMonthCount} expenses`}
                 icon={getMonthIcon()}
                 variant="success"
+                loading={loading}
               />
             </div>
 
@@ -290,6 +292,7 @@ export default function Home() {
                 subtitle="configured"
                 icon="bi bi-tags"
                 variant="warning"
+                loading={loading}
                 onClick={() => router.push("/categories")}
               />
             </div>
@@ -380,7 +383,7 @@ export default function Home() {
                                 ) as any;
                                 const userName = user?.name || row.paidBy;
                                 return (
-                                  <div className="d-flex align-items-center gap-1 flex-wrap">
+                                  <div className="align-items-center gap-1 flex-wrap">
                                     <UserBadge user={userName} />
                                     {user?.status === "left" && (
                                       <span
@@ -453,7 +456,10 @@ export default function Home() {
                       className="btn btn-primary"
                       onClick={() => setShowAddExpenseDialog(true)}
                     >
-                      <i className="bi bi-plus-circle me-2"></i>
+                      <i
+                        className="bi bi-plus-circle me-2"
+                        style={{ color: "#fff" }}
+                      ></i>
                       Add Expense
                     </button>
                     {selectedUser === "all" && (
@@ -690,7 +696,7 @@ export default function Home() {
                               render: (value, row: any) => {
                                 const displayName = row.fromUserName || value;
                                 return (
-                                  <div className="d-flex align-items-center">
+                                  <div className="d-flex justify-content-end justify-content-md-start align-items-center">
                                     <div className="avatar-xs bg-success text-white rounded-circle me-2 d-flex align-items-center justify-content-center">
                                       {displayName?.charAt(0) ?? "?"}
                                     </div>
@@ -706,7 +712,7 @@ export default function Home() {
                               render: (value, row: any) => {
                                 const displayName = row.toUserName || value;
                                 return (
-                                  <div className="d-flex align-items-center">
+                                  <div className="d-flex justify-content-end justify-content-md-start align-items-center">
                                     <div className="avatar-xs bg-primary text-white rounded-circle me-2 d-flex align-items-center justify-content-center">
                                       {displayName?.charAt(0) ?? "?"}
                                     </div>
@@ -1113,208 +1119,325 @@ export default function Home() {
               {/* Manual Split - Dynamic user selection */}
               {newExpense.splitMode === "manual" && (
                 <div className="mb-3">
-                  <span
-                    className="form-label fw-semibold"
-                    role="heading"
-                    aria-level={6}
-                  >
-                    Manual Split Records
-                  </span>
+                  {/* Header row */}
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <span
+                      className="form-label fw-semibold mb-0"
+                      role="heading"
+                      aria-level={6}
+                    >
+                      Manual Split Records
+                    </span>
+                    <span
+                      className="badge rounded-pill"
+                      style={{
+                        backgroundColor: "var(--bs-secondary-bg, #e9ecef)",
+                        color: "var(--text-secondary)",
+                      }}
+                    >
+                      {
+                        newExpense.manualSplitRecords.filter(
+                          (r) => r.userId !== ""
+                        ).length
+                      }{" "}
+                      / {(dashboardData?.users || []).length} users
+                    </span>
+                  </div>
+
+                  {/* Column headers */}
                   <div
-                    className="split-records-container"
-                    style={{ position: "relative" }}
+                    className="d-flex align-items-center gap-2 px-2 mb-1"
+                    aria-hidden="true"
+                    style={{
+                      fontSize: "0.75rem",
+                      fontWeight: 600,
+                      color: "var(--text-secondary)",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.04em",
+                    }}
                   >
+                    <div style={{ flex: "1 1 0" }}>User</div>
+                    <div style={{ width: "76px" }}>Amount (₹)</div>
+                    <div style={{ width: "32px" }}></div>
+                  </div>
+
+                  {/* Records list */}
+                  <div className="split-records-container" role="list">
                     {newExpense.manualSplitRecords.map((record, index) => {
-                      const availableUsers = dashboardData.users.filter(
+                      const isLastRow =
+                        index === newExpense.manualSplitRecords.length - 1;
+                      const isPlaceholder =
+                        isLastRow &&
+                        record.userId === "" &&
+                        record.amount === "";
+                      const availableUsers = (
+                        dashboardData?.users || []
+                      ).filter(
                         (user) =>
                           !newExpense.manualSplitRecords.some(
                             (r) => r.userId === user.id && r.id !== record.id
                           ) || user.id === record.userId
                       );
-
                       const canDelete =
                         record.userId !== "" || record.amount !== "";
-                      // Calculate z-index: first cards should have higher z-index
-                      const cardZIndex = 1000 - index;
 
                       return (
                         <div
                           key={record.id}
-                          className="card mb-2"
+                          role="listitem"
+                          className="d-flex flex-row align-items-center gap-2 rounded px-2 py-2 mb-1"
                           style={{
+                            border: isPlaceholder
+                              ? "1px dashed var(--border-color)"
+                              : "1px solid var(--border-color)",
                             backgroundColor: "var(--card-bg)",
-                            border: "1px solid var(--border-color)",
-                            position: "relative",
-                            overflow: "visible",
-                            zIndex: cardZIndex,
                           }}
                         >
-                          <div className="card-body p-2">
-                            <div className="row g-2 align-items-start">
-                              <div
-                                className="col-md-6"
-                                style={{ position: "relative" }}
-                              >
-                                {/* Audit: Manual split user picker - Use SearchableSelect for filtered user selection */}
-                                <label
-                                  htmlFor={`user-select-${record.id}`}
-                                  className="form-label small mb-1"
-                                >
-                                  User
-                                </label>
-                                <SearchableSelect
-                                  value={record.userId}
-                                  onChange={(value) => {
-                                    const newRecords = [
-                                      ...newExpense.manualSplitRecords,
-                                    ];
-                                    newRecords[index].userId = value as string;
+                          {/* User selector */}
+                          <div style={{ flex: "1 1 0", minWidth: 0 }}>
+                            <SearchableSelect
+                              value={record.userId}
+                              onChange={(value) => {
+                                const newRecords = [
+                                  ...newExpense.manualSplitRecords,
+                                ];
+                                newRecords[index].userId = value as string;
+                                if (
+                                  index ===
+                                    newExpense.manualSplitRecords.length - 1 &&
+                                  value !== ""
+                                ) {
+                                  newRecords.push({
+                                    id: Date.now().toString(),
+                                    userId: "",
+                                    amount: "",
+                                  });
+                                }
+                                setNewExpense({
+                                  ...newExpense,
+                                  manualSplitRecords: newRecords,
+                                });
+                              }}
+                              options={availableUsers.map((user) => ({
+                                label: user.name,
+                                value: user.id,
+                              }))}
+                              placeholder={
+                                isPlaceholder
+                                  ? "+ Add another user…"
+                                  : "Select user…"
+                              }
+                              searchPlaceholder="Search users..."
+                              id={`user-select-${record.id}`}
+                              noOptionsMessage="No users available"
+                              clearable={!isPlaceholder}
+                              aria-label={`Select user for split record ${index + 1}`}
+                            />
+                          </div>
 
-                                    // Auto-add new record if this is the last one and it's being filled
-                                    if (
-                                      index ===
-                                        newExpense.manualSplitRecords.length -
-                                          1 &&
-                                      value !== ""
-                                    ) {
-                                      newRecords.push({
-                                        id: Date.now().toString(),
-                                        userId: "",
-                                        amount: "",
-                                      });
-                                    }
-
-                                    setNewExpense({
-                                      ...newExpense,
-                                      manualSplitRecords: newRecords,
+                          {/* Amount input */}
+                          <div style={{ width: "76px", flexShrink: 0 }}>
+                            <div className="input-group input-group-sm">
+                              <input
+                                type="number"
+                                className="form-control form-control-sm"
+                                step="0.01"
+                                min="0"
+                                id={`amount-${record.id}`}
+                                autoComplete="off"
+                                value={record.amount}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  const newRecords = [
+                                    ...newExpense.manualSplitRecords,
+                                  ];
+                                  newRecords[index].amount = value;
+                                  if (
+                                    index ===
+                                      newExpense.manualSplitRecords.length -
+                                        1 &&
+                                    value !== "" &&
+                                    record.userId !== ""
+                                  ) {
+                                    newRecords.push({
+                                      id: Date.now().toString(),
+                                      userId: "",
+                                      amount: "",
                                     });
-                                  }}
-                                  options={availableUsers.map((user) => ({
-                                    label: user.name,
-                                    value: user.id,
-                                  }))}
-                                  placeholder="Select user..."
-                                  searchPlaceholder="Search users..."
-                                  id={`user-select-${record.id}`}
-                                  noOptionsMessage="No users available"
-                                  clearable={true}
-                                />
-                              </div>
-
-                              <div className="col-md-4">
-                                <label
-                                  htmlFor={`amount-${record.id}`}
-                                  className="form-label small mb-1"
-                                >
-                                  Amount
-                                </label>
-                                <input
-                                  type="number"
-                                  className="form-control form-control-sm"
-                                  step="0.01"
-                                  id={`amount-${record.id}`}
-                                  autoComplete="off"
-                                  value={record.amount}
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    const newRecords = [
-                                      ...newExpense.manualSplitRecords,
-                                    ];
-                                    newRecords[index].amount = value;
-
-                                    // Auto-add new record if this is the last one and it's being filled
-                                    if (
-                                      index ===
-                                        newExpense.manualSplitRecords.length -
-                                          1 &&
-                                      value !== "" &&
-                                      record.userId !== ""
-                                    ) {
-                                      newRecords.push({
-                                        id: Date.now().toString(),
-                                        userId: "",
-                                        amount: "",
-                                      });
-                                    }
-
-                                    setNewExpense({
-                                      ...newExpense,
-                                      manualSplitRecords: newRecords,
-                                    });
-                                  }}
-                                  placeholder="0.00"
-                                />
-                              </div>
-
-                              <div
-                                className="col-md-2 d-flex align-items-end"
-                                style={{ paddingTop: "1.5rem" }}
-                              >
-                                {canDelete && (
-                                  <button
-                                    type="button"
-                                    className="btn btn-sm btn-outline-danger w-100"
-                                    aria-label="Delete split record"
-                                    onClick={() => {
-                                      const newRecords =
-                                        newExpense.manualSplitRecords.filter(
-                                          (r) => r.id !== record.id
-                                        );
-                                      // Ensure at least one record exists
-                                      if (newRecords.length === 0) {
-                                        newRecords.push({
-                                          id: Date.now().toString(),
-                                          userId: "",
-                                          amount: "",
-                                        });
-                                      }
-                                      setNewExpense({
-                                        ...newExpense,
-                                        manualSplitRecords: newRecords,
-                                      });
-                                    }}
-                                    title="Delete this split record"
-                                  >
-                                    <i className="bi bi-trash"></i>
-                                  </button>
-                                )}
-                              </div>
+                                  }
+                                  setNewExpense({
+                                    ...newExpense,
+                                    manualSplitRecords: newRecords,
+                                  });
+                                }}
+                                placeholder="0.00"
+                                aria-label={`Amount for split record ${index + 1}`}
+                              />
                             </div>
+                          </div>
+
+                          {/* Delete button */}
+                          <div
+                            style={{ width: "32px", flexShrink: 0 }}
+                            className="d-flex justify-content-end justify-content-md-center"
+                          >
+                            {canDelete ? (
+                              <button
+                                type="button"
+                                className="btn btn-sm btn-outline-danger"
+                                style={{
+                                  width: "32px",
+                                  height: "32px",
+                                  padding: 0,
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  flexShrink: 0,
+                                }}
+                                onClick={() => {
+                                  const newRecords =
+                                    newExpense.manualSplitRecords.filter(
+                                      (r) => r.id !== record.id
+                                    );
+                                  if (newRecords.length === 0) {
+                                    newRecords.push({
+                                      id: Date.now().toString(),
+                                      userId: "",
+                                      amount: "",
+                                    });
+                                  }
+                                  setNewExpense({
+                                    ...newExpense,
+                                    manualSplitRecords: newRecords,
+                                  });
+                                }}
+                                title="Remove this record"
+                                aria-label={`Remove split record ${index + 1}`}
+                              >
+                                <i
+                                  className="bi bi-x-lg"
+                                  style={{ fontSize: "0.7rem" }}
+                                  aria-hidden="true"
+                                ></i>
+                              </button>
+                            ) : (
+                              <span
+                                style={{
+                                  width: "32px",
+                                  display: "inline-block",
+                                }}
+                              ></span>
+                            )}
                           </div>
                         </div>
                       );
                     })}
                   </div>
 
-                  {/* Total validation */}
-                  <div className="mt-2">
-                    <small style={{ color: "var(--text-secondary)" }}>
-                      Total split: ₹
-                      {newExpense.manualSplitRecords
-                        .filter((r) => r.userId !== "" && r.amount !== "")
-                        .reduce(
-                          (sum, r) => sum + parseFloat(r.amount || "0"),
-                          0
-                        )
-                        .toFixed(2)}
-                      {newExpense.amount &&
-                        ` / ₹${parseFloat(newExpense.amount).toFixed(2)}`}
-                      {newExpense.amount &&
-                        Math.abs(
-                          newExpense.manualSplitRecords
-                            .filter((r) => r.userId !== "" && r.amount !== "")
-                            .reduce(
-                              (sum, r) => sum + parseFloat(r.amount || "0"),
-                              0
-                            ) - parseFloat(newExpense.amount || "0")
-                        ) > 0.01 && (
-                          <span style={{ color: "var(--status-error)" }}>
-                            {" "}
-                            - Amounts don&apos;t match!
+                  {/* Total summary */}
+                  {(() => {
+                    const validRecords = newExpense.manualSplitRecords.filter(
+                      (r) => r.userId !== "" && r.amount !== ""
+                    );
+                    const totalSplit = validRecords.reduce(
+                      (sum, r) => sum + parseFloat(r.amount || "0"),
+                      0
+                    );
+                    const totalExpense = parseFloat(newExpense.amount || "0");
+                    const remaining = totalExpense - totalSplit;
+                    const hasAmount = !!newExpense.amount && totalExpense > 0;
+                    const isMatch = hasAmount && Math.abs(remaining) <= 0.01;
+                    const hasRecords = validRecords.length > 0;
+
+                    const borderColor = isMatch
+                      ? "#198754"
+                      : hasAmount && hasRecords
+                        ? "#ffc107"
+                        : "var(--border-color)";
+                    const bgColor = isMatch
+                      ? "rgba(25,135,84,0.07)"
+                      : hasAmount && hasRecords
+                        ? "rgba(255,193,7,0.07)"
+                        : "var(--card-bg)";
+
+                    return (
+                      <div
+                        className="mt-3 rounded px-3 py-2"
+                        style={{
+                          border: `1px solid ${borderColor}`,
+                          backgroundColor: bgColor,
+                          transition:
+                            "background-color 0.2s, border-color 0.2s",
+                        }}
+                      >
+                        <div className="d-flex justify-content-between align-items-center">
+                          <span
+                            style={{
+                              fontSize: "0.78rem",
+                              fontWeight: 600,
+                              textTransform: "uppercase",
+                              letterSpacing: "0.04em",
+                              color: "var(--text-secondary)",
+                            }}
+                          >
+                            Split Total
                           </span>
+                          <div className="d-flex align-items-baseline gap-2">
+                            <span
+                              style={{
+                                fontSize: "1rem",
+                                fontWeight: 700,
+                                color: isMatch
+                                  ? "#198754"
+                                  : "var(--text-primary)",
+                              }}
+                            >
+                              ₹{totalSplit.toFixed(2)}
+                            </span>
+                            {hasAmount && (
+                              <span
+                                style={{
+                                  fontSize: "0.82rem",
+                                  color: "var(--text-secondary)",
+                                }}
+                              >
+                                / ₹{totalExpense.toFixed(2)}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        {hasAmount && hasRecords && !isMatch && (
+                          <p
+                            className="mb-0 mt-1"
+                            style={{
+                              fontSize: "0.78rem",
+                              color: remaining > 0 ? "#856404" : "#dc3545",
+                            }}
+                          >
+                            <i
+                              className={`bi ${remaining > 0 ? "bi-exclamation-triangle" : "bi-exclamation-circle"} me-1`}
+                              aria-hidden="true"
+                            ></i>
+                            {remaining > 0
+                              ? `₹${remaining.toFixed(2)} still unallocated`
+                              : `₹${Math.abs(remaining).toFixed(2)} over-allocated`}
+                          </p>
                         )}
-                    </small>
-                  </div>
+                        {isMatch && hasRecords && (
+                          <p
+                            className="mb-0 mt-1"
+                            style={{ fontSize: "0.78rem", color: "#198754" }}
+                          >
+                            <i
+                              className="bi bi-check-circle me-1"
+                              aria-hidden="true"
+                            ></i>
+                            Amounts match perfectly
+                          </p>
+                        )}
+                      </div>
+                    );
+                  })()}
                 </div>
               )}
             </>

@@ -240,9 +240,6 @@ export function GroupSettings({
             <label className="form-check-label" htmlFor="requireApproval">
               Require admin approval for new members
             </label>
-            <div className="form-text small">
-              When enabled, join requests must be approved by an admin
-            </div>
           </div>
         </div>
 

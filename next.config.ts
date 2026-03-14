@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Disable React Strict Mode to prevent double-invocation of effects in development.
+  // Strict Mode mounts every component twice and fires every effect twice on purpose
+  // to help surface accidental side-effects; the downside is every API call fires twice
+  // while developing, which causes confusing duplicate network requests.
+  reactStrictMode: false,
+
   // Performance optimizations
   compress: true, // Enable gzip compression
 

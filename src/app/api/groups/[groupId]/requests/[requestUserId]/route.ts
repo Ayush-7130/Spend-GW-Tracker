@@ -114,22 +114,31 @@ export const PATCH = withAuth(async (req: NextRequest, context) => {
           const isRejoin = existingMember && existingMember.status === "left";
 
           if (isRejoin) {
-            // Re-activate the existing member entry instead of adding a new one
+            // Re-activate the existing member entry using arrayFilters so we target
+            // specifically the 'left' entry, not the first element matched by the
+            // positional-$ operator (which could be a stale 'active' duplicate).
+            // $pull on joinRequests and $set/$unset on members are on different arrays
+            // so they can coexist in one update, but arrayFilters requires a separate call.
             await groupsCollection.updateOne(
-              { _id: new ObjectId(groupId), "members.userId": requestUserId },
+              { _id: new ObjectId(groupId) },
               {
                 $set: {
-                  "members.$.status": "active",
-                  "members.$.joinedAt": now,
-                  "members.$.role": "member",
+                  "members.$[entry].status": "active",
+                  "members.$[entry].joinedAt": now,
+                  "members.$[entry].role": "member",
                   updatedAt: now,
                 },
-                $unset: { "members.$.leftAt": "" },
+                $unset: { "members.$[entry].leftAt": "" },
                 $pull: {
                   joinRequests: { userId: requestUserId } as any,
                 },
               },
-              { session }
+              {
+                arrayFilters: [
+                  { "entry.userId": requestUserId, "entry.status": "left" },
+                ],
+                session,
+              }
             );
           } else {
             // Add user to group members and remove join request atomically

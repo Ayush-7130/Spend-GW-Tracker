@@ -1221,6 +1221,23 @@ body {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE/Edge */
 }
+
+/* ─── Alert-info visibility fix ───────────────────────────────────────────── */
+/* Ensure info alerts are fully opaque and legible in both light and dark mode.
+   Uses !important + doubled selectors to win over accessibility.css rules.    */
+.alert-info,
+[role="alert"].alert-info {
+  background-color: #dbeafe !important;
+  color: #1e3a5f !important;
+  border-color: #93c5fd !important;
+}
+
+[data-theme="dark"] .alert-info,
+[data-theme="dark"] [role="alert"].alert-info {
+  background-color: #1d4ed8 !important;
+  color: #ffffff !important;
+  border-color: #3b82f6 !important;
+}
 .scroll-x-hidden-bar::-webkit-scrollbar {
   display: none; /* Chrome/Safari */
 }

@@ -114,7 +114,9 @@ export function GroupProvider({ children }: { children: React.ReactNode }) {
       const groupsData = await GroupsDataSource.getGroups();
       setGroups(groupsData as Group[]);
 
-      // Set active group based on persisted preference
+      // Set active group based on persisted preference, and sync server's currentGroupId
+      // to match. Without this sync, the server's currentGroupId remains stale (pointing
+      // to a different group) and all group-scoped APIs return data from the wrong group.
       const savedGroupId = getPersistedGroupId();
 
       if (savedGroupId && groupsData.length > 0) {
@@ -122,10 +124,23 @@ export function GroupProvider({ children }: { children: React.ReactNode }) {
         const active = groupsData.find(
           (g) => g._id === savedGroupId || g.groupId === savedGroupId
         );
-        setActiveGroup((active || groupsData[0]) as Group);
+        const resolved = (active || groupsData[0]) as Group;
+        setActiveGroup(resolved);
+
+        // Silently sync the server so all write/read APIs use the same group
+        GroupsDataSource.switchGroup({ groupId: resolved._id }).catch(() => {
+          // Non-fatal: server sync failure should not block the UI
+        });
       } else if (groupsData.length > 0) {
         // Default to first group if no saved selection
-        setActiveGroup(groupsData[0] as Group);
+        const firstGroup = groupsData[0] as Group;
+        setActiveGroup(firstGroup);
+        persistGroupId(firstGroup._id);
+
+        // Sync server to this default group
+        GroupsDataSource.switchGroup({ groupId: firstGroup._id }).catch(
+          () => {}
+        );
       }
 
       return groupsData as Group[];
@@ -167,6 +182,10 @@ export function GroupProvider({ children }: { children: React.ReactNode }) {
         // Find the newly created group in the updated list
         const createdGroup = updatedGroups.find((g) => g._id === newGroup._id);
         if (createdGroup) {
+          // Sync server's currentGroupId so all subsequent API calls (expense creation,
+          // dashboard, etc.) scope data to the newly created group.
+          await GroupsDataSource.switchGroup({ groupId: createdGroup._id });
+
           // Switch to the new group immediately
           setActiveGroup(createdGroup);
 
